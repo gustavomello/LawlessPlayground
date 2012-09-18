@@ -1,0 +1,24 @@
+name: LawlessPlayground
+main: org.example6.LawlessPlayground.LawlessPlayground
+version: 10.3.6
+commands:
+   zombies:
+      description: Teleport to zombies.
+      usage: /zombie
+      permission: zombies.access
+      permission-message: You don't have zombies.access
+   creative:
+      description: Teleport to creative.
+      usage: /creative
+      permission: creative.access
+      permission-message: You don't have creative.access
+   survival:
+      description: Teleport to survival
+      usage: /survival
+      permission: survival.access
+      permission-message: You don't have survival.access
+   kit:
+      description: Access kits
+      usage: /kit
+      permission: kit.access
+      permission-message: You don't have kit.access
