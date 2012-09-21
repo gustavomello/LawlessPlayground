@@ -1,4 +1,4 @@
-package org.example6.example6;
+package org.example6.example6.Commands;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,8 @@ import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.example6.example6.Commands.example6Command;
+import org.bukkit.command.PluginCommand;
+import org.example6.example6.example6;
 
 public class CommandManager implements CommandExecutor {
 	private example6 plugin;
@@ -21,20 +22,26 @@ public class CommandManager implements CommandExecutor {
 	public void AddCommand(example6Command command)
 	{
 		commands.add(command);
+		PluginCommand serverCommand = plugin.getCommand(command.getName());
+		serverCommand.setExecutor(this);
 	}
 	
-	public void RegisterCommands()
+	public void RemoveCommand(example6Command command)
 	{
-		for (example6Command command : commands)
-		{
-			plugin.getCommand(command.getName()).setExecutor(this);
-		}
+		commands.remove(command);
+		plugin.getCommand(command.getName()).setExecutor(null);
 	}
 	
 	@Override
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2,
 			String[] arg3) {
-		// TODO Auto-generated method stub
+		for (example6Command command : commands)
+		{
+			if (command.getName().equalsIgnoreCase(arg1.getName()))
+			{
+				return command.Run(arg0, arg1.getName(), arg2, arg3);
+			}
+		}
 		return false;
 	}
 }

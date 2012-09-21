@@ -21,8 +21,11 @@ public class Config {
 	{
 		filename = inFilename;
 		plugin = inPlugin;
-		config = load(filename, plugin);
-		config.options().copyDefaults(true);
+		
+		saveDefaults();
+		reload();
+
+		this.config.options().copyDefaults(true);
 	}
 	
 	public void createSection(String path, Map<String, Object> map)
@@ -73,45 +76,42 @@ public class Config {
 		return config.getDouble(path, defaultNumber);
 	}
 	
-	public void save()
+	private YamlConfiguration getDefaultConfig()
 	{
-		save(config, filename, plugin);
+	    InputStream defConfigStream = this.plugin.getResource(this.filename);
+	    if (defConfigStream == null)
+	    	return null;
+	    else
+	    	return YamlConfiguration.loadConfiguration(defConfigStream);
 	}
-	
-	public void load()
-	{
-		config = load(filename, plugin);
-	}
-	
-	private static FileConfiguration load(String _filename, JavaPlugin _plugin) {
-	    File customConfigFile = new File(_plugin.getDataFolder(), _filename);
-	    FileConfiguration customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
-	 
-	    // Look for defaults in the jar
-	    InputStream defConfigStream = _plugin.getResource(_filename);
-	    if (defConfigStream != null) {
-	        YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-	        customConfig.setDefaults(defConfig); 
-	        if (!customConfigFile.exists())
-		    {
-		    	_plugin.getLogger().info("No config file " + _filename + " exists, creating it now.");
-		    	save(defConfig, _filename, _plugin);
-			    customConfig = defConfig;
-		    }
-	    }
+
+	private void saveDefaults() {
+	    File configFile = new File(this.plugin.getDataFolder(), this.filename);
+	    YamlConfiguration defConfig = getDefaultConfig();
 	    
-	    return customConfig;
+	    if (defConfig == null) return;
+	    
+	    if (!configFile.exists())
+	    {
+	    	this.plugin.getLogger().info("No config file " + this.filename + " exists, creating it now.");
+		    this.config = defConfig;
+	    	this.save();
+	    }
+	    this.config.setDefaults(defConfig);
 	}
 	
-	private static void save(FileConfiguration customConfig, String _filename, JavaPlugin _plugin) {
-	    File customConfigFile = new File(_plugin.getDataFolder(), _filename);
-	    if (customConfig == null || customConfigFile == null) {
-	    	return;
-	    }
-	    try {
-	        customConfig.save(customConfigFile);
-	    } catch (IOException ex) {
-	        Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE, "Could not save config to " + customConfigFile, ex);
+	public void reload() {
+	    this.config = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), this.filename));
+	}
+	
+	public void save() {
+	    File customConfigFile = new File(this.plugin.getDataFolder(), this.filename);
+	    if (config != null && customConfigFile != null) {
+		    try {
+		    	config.save(customConfigFile);
+		    } catch (IOException ex) {
+		        Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE, "Could not save config to " + customConfigFile, ex);
+		    }
 	    }
 	}
 }
