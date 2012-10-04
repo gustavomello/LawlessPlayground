@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -26,6 +27,11 @@ public class Config {
 		reload();
 
 		this.config.options().copyDefaults(true);
+	}
+	
+	public Server getServer()
+	{
+		return plugin.getServer();
 	}
 	
 	public void createSection(String path, Map<String, Object> map)

@@ -2,9 +2,12 @@ package org.example6.example6.Commands;
 
 import java.util.List;
 
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.example6.example6.example6;
+import org.example6.example6.Commands.CommandTypes.example6Command;
 import org.example6.example6.Config.PlayerConfig;
 
 public class KitCommand extends example6Command {
@@ -20,11 +23,10 @@ public class KitCommand extends example6Command {
 		if (args.length == 3 && args[0].equalsIgnoreCase("give"))
 		{
 			if (!sender.hasPermission("example6.kit.give")) return false;
-			
 			String player = args[1];
 			String value = args[2];
 
-			PlayerConfig playerConfig = new PlayerConfig(player, this.Plugin);
+			PlayerConfig playerConfig = new PlayerConfig(player, this.plugin);
 			
 			List<String> newKits = playerConfig.getKits();
 			newKits.add(value);
@@ -34,7 +36,7 @@ public class KitCommand extends example6Command {
 		}
 		else
 		{
-			PlayerConfig playerConfig = new PlayerConfig(sender.getName(), this.Plugin);
+			PlayerConfig playerConfig = new PlayerConfig(sender.getName(), this.plugin);
 			List<String> kits = playerConfig.getKits();
 			if (kits.size() == 0)
 			{
@@ -55,6 +57,19 @@ public class KitCommand extends example6Command {
 	}
 	public void GenerateKit(String value)
 	{
-		
+		// 11 categories
+		// building
+		// decoration
+		// redstone
+		// transportation
+		// miscellaneous
+		// foodstuffs
+		// tools
+		// combat
+		// brewing
+		// materials
+		// technical
+		ItemStack stack = new ItemStack(Material.AIR, 2);
+		//stack.get
 	}
 }

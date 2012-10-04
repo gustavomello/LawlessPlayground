@@ -1,12 +1,14 @@
 name: LawlessPlayground
 main: org.example6.example6.example6
+softdepend: [Multiverse-Core]
 version: 10.3.6
 commands:
    zombies:
       description: Teleport to zombies.
-      usage: /zombie
+      usage: /zombies
       permission: example6.zombies
       permission-message: You can't do that here.
+      aliases: [zombie, zomb, zom, z]
    creative:
       description: Teleport to creative.
       usage: /creative
@@ -17,18 +19,20 @@ commands:
       usage: /survival
       permission: example6.survival
       permission-message: You can't do that here.
-   bed:
-      description: Teleport to your bed.
-      usage: /bed
-      permission: example6.bed
-      permission-message: You can't do that here.
-   kit:
-      description: Access kits
-      usage: /kit
-      permission: example6.kit
-      permission-message: You can't do that here.
+      aliases: [vanilla]
    test:
       description: Access tests
       usage: /test
       permission: example6.test
+      permission-message: You can't do that here.
+   home:
+      description: Teleport to your home / bed
+      usage: /home
+      permission: example6.home
+      permission-message: You can't do that here.
+      aliases: [bed]
+   spawn:
+      description: Teleport to spawn
+      usage: /spawn
+      permission: example6.spawn
       permission-message: You can't do that here.
