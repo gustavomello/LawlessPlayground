@@ -16,13 +16,7 @@ public abstract class TeleportCommand extends PlayerCommand {
 	@Override
 	public final Boolean RunAsPlayer(Player player, String command, String alias,
 			String[] args) {
-		PlayerConfig config = new PlayerConfig(player.getName(), plugin);
-		long difference = Calendar.getInstance().getTimeInMillis() - config.getLastTeleport();
-		if (difference < 5000)
-		{
-			player.sendMessage(ChatColor.RED + "You must wait " + (5000 - difference) + "ms before teleporting again.");
-			return true;
-		}
+		//old place of anti-teleport logic
 		return RunIfCanTeleport(player, command, alias, args);
 	}
 	

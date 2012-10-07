@@ -1,6 +1,6 @@
 name: LawlessPlayground
 main: org.example6.example6.example6
-softdepend: [Multiverse-Core]
+softdepend: [Multiverse-Core, PermissionsEx]
 version: 10.3.6
 commands:
    zombies:
@@ -14,6 +14,12 @@ commands:
       usage: /creative
       permission: example6.creative
       permission-message: You can't do that here.
+   trycreative:
+      description: Introduce self to creative ladder.
+      usage: /trycreative
+      permission: example6.trycreative
+      permission-message: You can't do that here.
+      aliases: [iwontgrief, letmebuild]
    survival:
       description: Teleport to survival
       usage: /survival
@@ -25,14 +31,25 @@ commands:
       usage: /test
       permission: example6.test
       permission-message: You can't do that here.
-   home:
-      description: Teleport to your home / bed
-      usage: /home
-      permission: example6.home
-      permission-message: You can't do that here.
-      aliases: [bed]
    spawn:
       description: Teleport to spawn
       usage: /spawn
       permission: example6.spawn
+      permission-message: You can't do that here.
+   random:
+      description: Teleport to a random location.
+      usage: /random [maxwidth]
+      permission: example6.random
+      permission-message: You can't do that here.
+   mod:
+      description: Send all mods a message.
+      usage: /mod message
+      permission: example6.modchat
+      permission-message: You can't do that here.
+      aliases: [modchat, m]
+   admin:
+      description: Send all admins a message.
+      usage: /admin message
+      permission: example6.adminchat
+      aliases: [adminchat, a]
       permission-message: You can't do that here.
