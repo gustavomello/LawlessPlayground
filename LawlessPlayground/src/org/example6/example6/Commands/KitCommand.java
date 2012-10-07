@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.example6Command;

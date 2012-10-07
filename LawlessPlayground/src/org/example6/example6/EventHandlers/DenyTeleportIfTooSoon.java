@@ -8,7 +8,6 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.example6.example6.example6;
 
-import org.example6.example6.Config.PlayerConfig;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerTeleportHandler;
 
 public class DenyTeleportIfTooSoon extends PlayerTeleportHandler {
@@ -23,8 +22,8 @@ public class DenyTeleportIfTooSoon extends PlayerTeleportHandler {
 			return;
 		
 		Player player = event.getPlayer();
-		PlayerConfig config = plugin.getPlayerConfig(player);
-		long difference = Calendar.getInstance().getTimeInMillis() - config.getLastTeleport();
+		long difference = Calendar.getInstance().getTimeInMillis()
+				- plugin.getTempData().GetLastTeleportTime(player.getName());
 		
 		if (difference < 5000)
 		{
@@ -33,6 +32,6 @@ public class DenyTeleportIfTooSoon extends PlayerTeleportHandler {
 			return;
 		}
 		
-		plugin.getPlayerConfig(event.getPlayer()).setLastTeleport(Calendar.getInstance().getTimeInMillis());
+		plugin.getTempData().SetLastTeleportTime(player.getName(), Calendar.getInstance().getTimeInMillis());
 	}
 }

@@ -1,7 +1,6 @@
 package org.example6.example6.Commands;
 
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.WorldChangeCommand;

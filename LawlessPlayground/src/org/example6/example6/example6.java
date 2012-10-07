@@ -7,7 +7,8 @@ import org.example6.example6.Commands.*;
 import org.example6.example6.Config.PlayerConfig;
 import org.example6.example6.EventHandlers.DenyTeleportIfInCombat;
 import org.example6.example6.EventHandlers.DenyTeleportIfTooSoon;
-import org.example6.example6.EventHandlers.LogLastDamageTime;
+import org.example6.example6.EventHandlers.LogLastDamageTimePVP;
+import org.example6.example6.EventHandlers.LoseExpIfInCombat;
 import org.example6.example6.EventHandlers.ResetLastLocation;
 import org.example6.example6.EventHandlers.SetLastLocation;
 
@@ -26,9 +27,7 @@ public class example6 extends JavaPlugin {
 		data = new TempData(this);
 		
 		cm = new CommandManager(this);
-		//cm.AddCommand(new KitCommand(this));
 		cm.AddCommand(new TestCommand(this));
-		//cm.AddCommand(new HomeCommand(this));
 		cm.AddCommand(new SpawnCommand(this));
 		cm.AddCommand(new SurvivalCommand(this));
 		cm.AddCommand(new CreativeCommand(this));
@@ -37,15 +36,16 @@ public class example6 extends JavaPlugin {
 		cm.AddCommand(new RandomCommand(this));
 		cm.AddCommand(new ModChatCommand(this));
 		cm.AddCommand(new AdminChatCommand(this));
+		//cm.AddCommand(new KitCommand(this));
+		//cm.AddCommand(new HomeCommand(this));
 		
 		em = new EventManager(this);
 		em.OnTeleport.add(new SetLastLocation(this));
 		em.OnTeleport.add(new DenyTeleportIfInCombat(this));
 		em.OnTeleport.add(new DenyTeleportIfTooSoon(this));
-		
-		em.OnEntityDamageByEntity.add(new LogLastDamageTime(this));
-		
+		em.OnEntityDamageByEntity.add(new LogLastDamageTimePVP(this));
 		em.OnEntityDeath.add(new ResetLastLocation(this));
+		em.OnPlayerQuit.add(new LoseExpIfInCombat(this));
 	}
 	
 	public void onDisable()

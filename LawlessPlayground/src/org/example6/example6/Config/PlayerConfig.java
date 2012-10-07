@@ -11,9 +11,6 @@ public class PlayerConfig extends Config {
 	interface PlayerConfigKeys
 	{
 		static final String KITS = "kits";
-		
-		static final String LAST_TELEPORT = "lastteleport";
-		static final String LAST_RANDOM_TELEPORT = "lastrandomteleport";
 
 		static final String SURVIVAL_LOCATION = "location.survival";
 		static final String SURVIVAL_LOCATION_WORLD = "location.survival.world";
@@ -158,30 +155,6 @@ public class PlayerConfig extends Config {
 	public void clearCreativeLocation()
 	{
 		this.set(PlayerConfigKeys.CREATIVE_LOCATION, null);
-		this.save();
-	}
-	
-	public long getLastTeleport()
-	{
-		long time = this.getLong(PlayerConfigKeys.LAST_TELEPORT, 0);
-		return time;
-	}
-	
-	public void setLastTeleport(long time)
-	{
-		this.set(PlayerConfigKeys.LAST_TELEPORT, time);
-		this.save();
-	}
-	
-	public long getLastRandomTeleport()
-	{
-		long time = this.getLong(PlayerConfigKeys.LAST_RANDOM_TELEPORT, 0);
-		return time;
-	}
-	
-	public void setLastRandomTeleport(long time)
-	{
-		this.set(PlayerConfigKeys.LAST_RANDOM_TELEPORT, time);
 		this.save();
 	}
 }

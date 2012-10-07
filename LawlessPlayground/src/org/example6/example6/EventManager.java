@@ -6,14 +6,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.example6.example6.EventHandlers.HandlerTypes.EntityDamageByEntityHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.EntityDeathHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.Handler;
+import org.example6.example6.EventHandlers.HandlerTypes.PlayerQuitHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerTeleportHandler;
 
 public class EventManager implements Listener {
 	ArrayList<PlayerTeleportHandler> OnTeleport = new ArrayList<PlayerTeleportHandler>();
+	ArrayList<PlayerQuitHandler> OnPlayerQuit = new ArrayList<PlayerQuitHandler>();
 	ArrayList<EntityDamageByEntityHandler> OnEntityDamageByEntity = new ArrayList<EntityDamageByEntityHandler>();
 	ArrayList<EntityDeathHandler> OnEntityDeath = new ArrayList<EntityDeathHandler>();
 	
@@ -44,6 +47,15 @@ public class EventManager implements Listener {
 	public void OnEntityDeath(EntityDeathEvent event)
 	{
 		for (Handler r : OnEntityDeath)
+		{
+			r.run(event);
+		}
+	}
+	
+	@EventHandler
+	public void OnPlayerQuit(PlayerQuitEvent event)
+	{
+		for (Handler r : OnPlayerQuit)
 		{
 			r.run(event);
 		}
