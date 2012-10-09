@@ -37,6 +37,7 @@ public class example6 extends JavaPlugin {
 		cm.AddCommand(new RandomCommand(this));
 		cm.AddCommand(new ModChatCommand(this));
 		cm.AddCommand(new AdminChatCommand(this));
+		//cm.AddCommand(new WhisperCommand(this));
 		//cm.AddCommand(new KitCommand(this));
 		//cm.AddCommand(new HomeCommand(this));
 		

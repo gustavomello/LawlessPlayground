@@ -46,7 +46,7 @@ commands:
       usage: /mod message
       permission: example6.modchat
       permission-message: You can't do that here.
-      aliases: [modchat, m]
+      aliases: [modchat, mc]
    admin:
       description: Send all admins a message.
       usage: /admin message
