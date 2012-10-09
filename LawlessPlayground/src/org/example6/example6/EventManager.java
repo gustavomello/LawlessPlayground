@@ -3,20 +3,24 @@ package org.example6.example6;
 import java.util.ArrayList;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.example6.example6.EventHandlers.HandlerTypes.EntityDamageByEntityHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.EntityDeathHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.Handler;
+import org.example6.example6.EventHandlers.HandlerTypes.PlayerJoinHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerQuitHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerTeleportHandler;
 
 public class EventManager implements Listener {
 	ArrayList<PlayerTeleportHandler> OnTeleport = new ArrayList<PlayerTeleportHandler>();
 	ArrayList<PlayerQuitHandler> OnPlayerQuit = new ArrayList<PlayerQuitHandler>();
+	ArrayList<PlayerJoinHandler> OnPlayerJoin = new ArrayList<PlayerJoinHandler>();
 	ArrayList<EntityDamageByEntityHandler> OnEntityDamageByEntity = new ArrayList<EntityDamageByEntityHandler>();
 	ArrayList<EntityDeathHandler> OnEntityDeath = new ArrayList<EntityDeathHandler>();
 	
@@ -56,6 +60,15 @@ public class EventManager implements Listener {
 	public void OnPlayerQuit(PlayerQuitEvent event)
 	{
 		for (Handler r : OnPlayerQuit)
+		{
+			r.run(event);
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void OnPlayerJoin(PlayerJoinEvent event)
+	{
+		for (Handler r : OnPlayerJoin)
 		{
 			r.run(event);
 		}

@@ -2,9 +2,7 @@ package org.example6.example6.Commands;
 
 import java.util.List;
 
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.inventory.ItemStack;
 import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.example6Command;
 import org.example6.example6.Config.PlayerConfig;
@@ -68,7 +66,6 @@ public class KitCommand extends example6Command {
 		// brewing
 		// materials
 		// technical
-		ItemStack stack = new ItemStack(Material.AIR, 2);
 		//stack.get
 	}
 }

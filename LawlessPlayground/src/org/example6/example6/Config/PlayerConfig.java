@@ -8,9 +8,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 
 public class PlayerConfig extends Config {
+	public interface PendingChange
+	{
+		static final String CLEAR_EXPERIENCE = "clearexp";
+		static final String CLEAR_WORN_ITEMS = "clearwornitems";
+		static final String CLEAR_INVENTORY = "clearinventory";
+	}
 	interface PlayerConfigKeys
 	{
 		static final String KITS = "kits";
+		
+		static final String PENDING_CHANGES = "pendingchanges";
 
 		static final String SURVIVAL_LOCATION = "location.survival";
 		static final String SURVIVAL_LOCATION_WORLD = "location.survival.world";
@@ -49,6 +57,25 @@ public class PlayerConfig extends Config {
 	{
 		this.set(PlayerConfigKeys.KITS, newKits);
 		this.save();
+	}
+	
+	public void addPendingChange(String change)
+	{
+		List<String> pendingchanges = this.getStringList(PlayerConfigKeys.PENDING_CHANGES);
+		pendingchanges.add(change);
+		this.set(PlayerConfigKeys.PENDING_CHANGES, pendingchanges);
+		this.save();
+	}
+	
+	public void clearPendingChanges()
+	{
+		this.set(PlayerConfigKeys.PENDING_CHANGES, null);
+		this.save();
+	}
+	
+	public List<String> getPendingChanges()
+	{
+		return this.getStringList(PlayerConfigKeys.PENDING_CHANGES);
 	}
 
 	public Location getSurvivalLocation()

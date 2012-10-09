@@ -5,10 +5,11 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.example6.example6.Commands.*;
 import org.example6.example6.Config.PlayerConfig;
+import org.example6.example6.EventHandlers.ApplyPendingChanges;
 import org.example6.example6.EventHandlers.DenyTeleportIfInCombat;
 import org.example6.example6.EventHandlers.DenyTeleportIfTooSoon;
 import org.example6.example6.EventHandlers.LogLastDamageTimePVP;
-import org.example6.example6.EventHandlers.LoseExpIfInCombat;
+import org.example6.example6.EventHandlers.LoseStuffIfInCombat;
 import org.example6.example6.EventHandlers.ResetLastLocation;
 import org.example6.example6.EventHandlers.SetLastLocation;
 
@@ -45,7 +46,8 @@ public class example6 extends JavaPlugin {
 		em.OnTeleport.add(new DenyTeleportIfTooSoon(this));
 		em.OnEntityDamageByEntity.add(new LogLastDamageTimePVP(this));
 		em.OnEntityDeath.add(new ResetLastLocation(this));
-		em.OnPlayerQuit.add(new LoseExpIfInCombat(this));
+		em.OnPlayerJoin.add(new ApplyPendingChanges(this));
+		em.OnPlayerQuit.add(new LoseStuffIfInCombat(this));
 	}
 	
 	public void onDisable()
