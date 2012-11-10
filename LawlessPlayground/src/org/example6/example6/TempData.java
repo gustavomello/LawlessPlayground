@@ -3,13 +3,24 @@ package org.example6.example6;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import org.bukkit.World;
+
 public class TempData {
 	example6 plugin;
 	HashMap<String,Long> lastCombatTimes = new HashMap<String,Long>();
 	HashMap<String,Long> lastTeleportTimes = new HashMap<String,Long>();
+	World zombies;
+	World creative;
 	
 	public TempData(example6 plugin) {
 		this.plugin = plugin;
+		this.zombies = plugin.getServer().getWorld("zombies");
+		this.creative = plugin.getServer().getWorld("creative");
+	}
+	
+	public World getZombieWorld()
+	{
+		return this.zombies;
 	}
 	
 	public Boolean IsInCombat(String player)

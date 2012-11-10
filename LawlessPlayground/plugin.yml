@@ -53,3 +53,8 @@ commands:
       permission: example6.adminchat
       aliases: [adminchat, a]
       permission-message: You can't do that here.
+   help:
+      description: Send all admins a message.
+      usage: /help [options]
+      permission: example6.help
+      permission-message: You can't do that here.

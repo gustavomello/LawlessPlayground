@@ -10,7 +10,9 @@ import org.example6.example6.EventHandlers.DenyTeleportIfInCombat;
 import org.example6.example6.EventHandlers.DenyTeleportIfTooSoon;
 import org.example6.example6.EventHandlers.LogLastDamageTimePVP;
 import org.example6.example6.EventHandlers.LoseStuffIfInCombat;
+import org.example6.example6.EventHandlers.RandomizeSpawnIfNew;
 import org.example6.example6.EventHandlers.ResetLastLocation;
+import org.example6.example6.EventHandlers.SendToNearbyPlayersOnly;
 import org.example6.example6.EventHandlers.SetLastLocation;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
@@ -37,6 +39,7 @@ public class example6 extends JavaPlugin {
 		cm.AddCommand(new RandomCommand(this));
 		cm.AddCommand(new ModChatCommand(this));
 		cm.AddCommand(new AdminChatCommand(this));
+		cm.AddCommand(new HelpCommand(this));
 		//cm.AddCommand(new WhisperCommand(this));
 		//cm.AddCommand(new KitCommand(this));
 		//cm.AddCommand(new HomeCommand(this));
@@ -48,7 +51,9 @@ public class example6 extends JavaPlugin {
 		em.OnEntityDamageByEntity.add(new LogLastDamageTimePVP(this));
 		em.OnEntityDeath.add(new ResetLastLocation(this));
 		em.OnPlayerJoin.add(new ApplyPendingChanges(this));
+		em.OnPlayerJoin.add(new RandomizeSpawnIfNew(this));
 		em.OnPlayerQuit.add(new LoseStuffIfInCombat(this));
+		em.OnPlayerChat.add(new SendToNearbyPlayersOnly(this));
 	}
 	
 	public void onDisable()

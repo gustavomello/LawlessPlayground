@@ -15,7 +15,7 @@ public class RandomCommand extends PlayerCommand {
 		super("random", "example6.random", plugin);
 	}
 	
-	public int generatePosNegRandomInt(Random generator, int size)
+	public static int generatePosNegRandomInt(Random generator, int size)
 	{
 		int randompos = generator.nextInt(size);
 		return (generator.nextBoolean()) ? randompos * -1 : randompos;
@@ -24,20 +24,26 @@ public class RandomCommand extends PlayerCommand {
 	@Override
 	public Boolean RunAsPlayer(Player player, String command, String alias,
 			String[] args) {
-		World w = player.getWorld();
 		
-		int borderWidth = 4500;
+		int borderWidth = 2000;
 		if (args.length > 0)
 		{
 			borderWidth = Integer.parseInt(args[0]);
 		}
 		
+		TeleportPlayerRandomly(player, borderWidth);
+		return true;
+	}
+	
+	public static void TeleportPlayerRandomly(Player player, int radius)
+	{
 		Random generator = new Random();
 		Location location = null;
+		World w = player.getWorld();
 		while (location == null)
 		{
-			int randomposX = generatePosNegRandomInt(generator, borderWidth);
-			int randomposZ = generatePosNegRandomInt(generator, borderWidth);
+			int randomposX = generatePosNegRandomInt(generator, radius);
+			int randomposZ = generatePosNegRandomInt(generator, radius);
 			
 			Location targetLocation = w.getHighestBlockAt(randomposX, randomposZ).getLocation();
 			if (!(targetLocation.getBlock().isLiquid()
@@ -45,6 +51,5 @@ public class RandomCommand extends PlayerCommand {
 				location = targetLocation;
 		}
 		player.teleport(location.add(0, 2, 0));
-		return true;
 	}
 }
