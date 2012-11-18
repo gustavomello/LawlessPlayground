@@ -10,10 +10,10 @@ import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.example6.example6.ExperienceManager;
 import org.example6.example6.example6;
 import org.example6.example6.Config.PlayerConfig.PendingChange;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerQuitHandler;
+import org.example6.example6.Utils.ExperienceManager;
 
 public class LoseStuffIfInCombat extends PlayerQuitHandler {
 

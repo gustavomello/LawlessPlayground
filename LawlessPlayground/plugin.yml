@@ -26,10 +26,10 @@ commands:
       permission: example6.survival
       permission-message: You can't do that here.
       aliases: [vanilla]
-   test:
-      description: Access tests
-      usage: /test
-      permission: example6.test
+   zregen:
+      description: Access zregen
+      usage: /zregen
+      permission: example6.zregen
       permission-message: You can't do that here.
    spawn:
       description: Teleport to spawn
@@ -40,6 +40,11 @@ commands:
       description: Teleport to a random location.
       usage: /random [maxwidth]
       permission: example6.random
+      permission-message: You can't do that here.
+   home:
+      description: Teleport to home.
+      usage: /home
+      permission: example6.home
       permission-message: You can't do that here.
    mod:
       description: Send all mods a message.

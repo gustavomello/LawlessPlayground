@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.example6.example6.EventHandlers.HandlerTypes.EntityDamageByEntityHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.EntityDeathHandler;
@@ -17,6 +18,7 @@ import org.example6.example6.EventHandlers.HandlerTypes.Handler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerChatHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerJoinHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerQuitHandler;
+import org.example6.example6.EventHandlers.HandlerTypes.PlayerRespawnHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerTeleportHandler;
 
 public class EventManager implements Listener {
@@ -26,10 +28,20 @@ public class EventManager implements Listener {
 	ArrayList<PlayerChatHandler> OnPlayerChat = new ArrayList<PlayerChatHandler>();
 	ArrayList<EntityDamageByEntityHandler> OnEntityDamageByEntity = new ArrayList<EntityDamageByEntityHandler>();
 	ArrayList<EntityDeathHandler> OnEntityDeath = new ArrayList<EntityDeathHandler>();
+	ArrayList<PlayerRespawnHandler> OnPlayerRespawn = new ArrayList<PlayerRespawnHandler>();
 	
 	public EventManager(example6 plugin)
 	{
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+	}
+	
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerRespawn(PlayerRespawnEvent event)
+	{
+		for (Handler r : OnPlayerRespawn)
+		{
+			r.run(event);
+		}
 	}
 	
 	@EventHandler

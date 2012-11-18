@@ -1,14 +1,15 @@
 package org.example6.example6.Commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.example6Command;
 
-public class TestCommand extends example6Command {
+public class RenameCommand extends example6Command {
 
-	public TestCommand(example6 Plugin) {
-		super("test", "example6.test", Plugin);
+	public RenameCommand(String name, String permission, example6 plugin) {
+		super("rename", "example6.rename", plugin);
 	}
 
 	@Override
@@ -16,8 +17,13 @@ public class TestCommand extends example6Command {
 			String[] args) {
 		if (sender instanceof Player)
 		{
+			Player player = (Player) sender;
 		}
-		return true;
+		else
+		{
+			sender.sendMessage(ChatColor.RED + "You must be a player to use this.");
+		}
+		return null;
 	}
 
 }

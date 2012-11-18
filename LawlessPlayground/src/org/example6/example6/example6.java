@@ -1,5 +1,8 @@
 package org.example6.example6;
 
+import java.io.File;
+
+import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -8,41 +11,52 @@ import org.example6.example6.Config.PlayerConfig;
 import org.example6.example6.EventHandlers.ApplyPendingChanges;
 import org.example6.example6.EventHandlers.DenyTeleportIfInCombat;
 import org.example6.example6.EventHandlers.DenyTeleportIfTooSoon;
+import org.example6.example6.EventHandlers.GreenText;
 import org.example6.example6.EventHandlers.LogLastDamageTimePVP;
 import org.example6.example6.EventHandlers.LoseStuffIfInCombat;
+import org.example6.example6.EventHandlers.RandomRespawnIfNoHome;
 import org.example6.example6.EventHandlers.RandomizeSpawnIfNew;
 import org.example6.example6.EventHandlers.ResetLastLocation;
 import org.example6.example6.EventHandlers.SendToNearbyPlayersOnly;
 import org.example6.example6.EventHandlers.SetLastLocation;
+import org.example6.example6.EventHandlers.TryCreative;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.multiverseinventories.MultiverseInventories;
 public class example6 extends JavaPlugin {
 	
-	TempData data;
+	TempData temp;
 	
-	CommandManager cm;
+	SerializableData data;
 	
-	EventManager em;
+	public CommandManager cm;
+	
+	public EventManager em;
+	
+	public Chunk clipboard = null;
 	
 	public void onEnable()
 	{
-		data = new TempData(this);
+		temp = new TempData(this);
+		
+		data = new SerializableData(
+				this.getDataFolder() + File.separator + "data" + File.separator
+				);
 		
 		cm = new CommandManager(this);
-		cm.AddCommand(new TestCommand(this));
+		cm.AddCommand(new ZombieWorldRegenCommand(this));
 		cm.AddCommand(new SpawnCommand(this));
 		cm.AddCommand(new SurvivalCommand(this));
 		cm.AddCommand(new CreativeCommand(this));
 		cm.AddCommand(new ZombiesCommand(this));
-		cm.AddCommand(new TryCreativeCommand(this));
+		//cm.AddCommand(new TryCreativeCommand(this));
 		cm.AddCommand(new RandomCommand(this));
 		cm.AddCommand(new ModChatCommand(this));
 		cm.AddCommand(new AdminChatCommand(this));
 		cm.AddCommand(new HelpCommand(this));
 		//cm.AddCommand(new WhisperCommand(this));
 		//cm.AddCommand(new KitCommand(this));
-		//cm.AddCommand(new HomeCommand(this));
+		cm.AddCommand(new HomeCommand(this));
 		
 		em = new EventManager(this);
 		em.OnTeleport.add(new SetLastLocation(this));
@@ -52,8 +66,11 @@ public class example6 extends JavaPlugin {
 		em.OnEntityDeath.add(new ResetLastLocation(this));
 		em.OnPlayerJoin.add(new ApplyPendingChanges(this));
 		em.OnPlayerJoin.add(new RandomizeSpawnIfNew(this));
+		em.OnPlayerJoin.add(new TryCreative(this));
 		em.OnPlayerQuit.add(new LoseStuffIfInCombat(this));
 		em.OnPlayerChat.add(new SendToNearbyPlayersOnly(this));
+		em.OnPlayerChat.add(new GreenText(this));
+		em.OnPlayerRespawn.add(new RandomRespawnIfNoHome(this));
 	}
 	
 	public void onDisable()
@@ -62,6 +79,11 @@ public class example6 extends JavaPlugin {
 	}
 	
 	public TempData getTempData()
+	{
+		return temp;
+	}
+	
+	public SerializableData getSerializableData()
 	{
 		return data;
 	}

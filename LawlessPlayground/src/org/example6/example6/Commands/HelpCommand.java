@@ -13,22 +13,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.example6Command;
+import org.example6.example6.Utils.MiscUtils;
 
 import com.google.common.io.Files;
 
 
 public class HelpCommand extends example6Command {
-
-	static String colorize(String string)
-	{
-		string = string.replace("&l", ChatColor.BOLD.toString());
-		string = string.replace("&n", ChatColor.UNDERLINE.toString());
-		string = string.replace("&o", ChatColor.ITALIC.toString());
-		string = string.replace("&k", ChatColor.MAGIC.toString());
-		string = string.replace("&m", ChatColor.STRIKETHROUGH.toString());
-		string = string.replace("&r", ChatColor.RESET.toString());
-		return string.replaceAll("(?i)&([a-k0-9])", "\u00A7$1");
-	}
 	static FileFilter filesOnly = new FileFilter() {
 		@Override
 		public boolean accept(File pathname) {
@@ -150,7 +140,7 @@ public class HelpCommand extends example6Command {
 			List<String> lines = Files.readLines(file, Charset.defaultCharset());
 			for (String line : lines)
 			{
-				sender.sendMessage(colorize(StringEscapeUtils.unescapeJava(line)));
+				sender.sendMessage(MiscUtils.colorize(StringEscapeUtils.unescapeJava(line)));
 			}
 			if (lines.size() == 0)
 			{

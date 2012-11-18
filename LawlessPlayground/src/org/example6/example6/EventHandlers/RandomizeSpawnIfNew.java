@@ -1,7 +1,6 @@
 package org.example6.example6.EventHandlers;
 
-import java.util.logging.Logger;
-
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.example6.example6.example6;
@@ -18,7 +17,9 @@ public class RandomizeSpawnIfNew extends PlayerJoinHandler {
 	public void run(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		if (!player.hasPlayedBefore())
-			RandomCommand.TeleportPlayerRandomly(player, 2000);
-		Logger.getAnonymousLogger().info("hasPlayedBefore was " + ((player.hasPlayedBefore()) ? "true" : "false"));
+		{
+			Location newloc = RandomCommand.GetRandomLocation(player, 2000);
+			player.teleport(newloc);
+		}
 	}
 }
