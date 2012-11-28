@@ -1,12 +1,11 @@
 package org.example6.example6.Commands.CommandTypes;
 
 import org.bukkit.entity.Player;
-import org.example6.example6.example6;
 
 public abstract class TeleportCommand extends PlayerCommand {
 
-	public TeleportCommand(String name, String permission, example6 plugin) {
-		super(name, permission, plugin);
+	public TeleportCommand(String name, String permission) {
+		super(name, permission);
 	}
 
 	@Override

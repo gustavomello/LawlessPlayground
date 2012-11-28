@@ -12,7 +12,11 @@ import net.minecraft.server.NBTTagString;
 
 public class Book implements Serializable
 {
-    private String author;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4816224606314511987L;
+	private String author;
     private String title;
     private String[] pages;
  

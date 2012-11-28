@@ -12,10 +12,6 @@ import org.example6.example6.EventHandlers.HandlerTypes.PlayerTeleportHandler;
 
 public class DenyTeleportIfTooSoon extends PlayerTeleportHandler {
 
-	public DenyTeleportIfTooSoon(example6 plugin) {
-		super(plugin);
-	}
-
 	@Override
 	public void run(PlayerTeleportEvent event) {
 		if (!event.getCause().equals(TeleportCause.COMMAND))
@@ -23,7 +19,7 @@ public class DenyTeleportIfTooSoon extends PlayerTeleportHandler {
 		
 		Player player = event.getPlayer();
 		long difference = Calendar.getInstance().getTimeInMillis()
-				- plugin.getTempData().GetLastTeleportTime(player.getName());
+				- example6.getTempData().GetLastTeleportTime(player.getName());
 		
 		if (difference < 5000)
 		{
@@ -32,6 +28,6 @@ public class DenyTeleportIfTooSoon extends PlayerTeleportHandler {
 			return;
 		}
 		
-		plugin.getTempData().SetLastTeleportTime(player.getName(), Calendar.getInstance().getTimeInMillis());
+		example6.getTempData().SetLastTeleportTime(player.getName(), Calendar.getInstance().getTimeInMillis());
 	}
 }

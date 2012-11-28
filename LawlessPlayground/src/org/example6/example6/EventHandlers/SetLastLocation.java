@@ -7,14 +7,11 @@ import org.example6.example6.Config.PlayerConfig;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerTeleportHandler;
 
 public class SetLastLocation extends PlayerTeleportHandler {
-	public SetLastLocation(example6 plugin) {
-		super(plugin);
-	}
 
 	@Override
 	public void run(PlayerTeleportEvent event) {
 		Player player = event.getPlayer();
-		PlayerConfig config = plugin.getPlayerConfig(player);
+		PlayerConfig config = example6.getConfigManager().getPlayerConfig(player);
 		
 		switch (event.getFrom().getWorld().getName())
 		{

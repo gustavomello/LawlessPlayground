@@ -9,18 +9,13 @@ import org.example6.example6.EventHandlers.HandlerTypes.EntityDeathHandler;
 
 public class ResetLastLocation extends EntityDeathHandler {
 
-	public ResetLastLocation(example6 plugin) {
-		super(plugin);
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void run(EntityDeathEvent event) {
 		if (!(event.getEntity() instanceof Player))
 			return;
 		
 		Player player = (Player) event.getEntity();
-		PlayerConfig config = plugin.getPlayerConfig(player);
+		PlayerConfig config = example6.getConfigManager().getPlayerConfig(player);
 		
 		switch (player.getWorld().getName())
 		{

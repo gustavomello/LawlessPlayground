@@ -17,11 +17,6 @@ import org.example6.example6.Utils.ExperienceManager;
 
 public class LoseStuffIfInCombat extends PlayerQuitHandler {
 
-	public LoseStuffIfInCombat(example6 plugin) {
-		super(plugin);
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void run(PlayerQuitEvent event) {
 		// TODO Auto-generated method stub
@@ -29,7 +24,7 @@ public class LoseStuffIfInCombat extends PlayerQuitHandler {
 		World world = player.getWorld();
 		Location location = player.getLocation();
 		
-		if (plugin.getTempData().IsInCombat(player.getName()))
+		if (example6.getTempData().IsInCombat(player.getName()))
 		{			
 			List<ItemStack> wornItems = this.removeAir(player.getInventory().getArmorContents());
 			
@@ -68,13 +63,15 @@ public class LoseStuffIfInCombat extends PlayerQuitHandler {
 	private void dropInventory(Player player, World world,
 			Location location, List<ItemStack> inventory) {
 		dropItems(world, location, inventory);
-		plugin.getPlayerConfig(player).addPendingChange(PendingChange.CLEAR_INVENTORY);
+		example6.getConfigManager().getPlayerConfig(player)
+			.addPendingChange(PendingChange.CLEAR_INVENTORY);
 	}
 
 	private void dropWornItems(Player player, World world, Location location,
 			List<ItemStack> wornItems) {
 		dropItems(world, location, wornItems);
-		plugin.getPlayerConfig(player).addPendingChange(PendingChange.CLEAR_WORN_ITEMS);
+		example6.getConfigManager().getPlayerConfig(player)
+			.addPendingChange(PendingChange.CLEAR_WORN_ITEMS);
 	}
 
 	private void dropItems(World world, Location location, List<ItemStack> wornItems) {
@@ -99,6 +96,7 @@ public class LoseStuffIfInCombat extends PlayerQuitHandler {
 		for (int i = 1; i <= orbs; i++)
 			((ExperienceOrb)world.spawn(location, ExperienceOrb.class)).setExperience(xpAmountMod-1);
 		
-		plugin.getPlayerConfig(player).addPendingChange(PendingChange.CLEAR_EXPERIENCE);
+		example6.getConfigManager().getPlayerConfig(player)
+			.addPendingChange(PendingChange.CLEAR_EXPERIENCE);
 	}
 }

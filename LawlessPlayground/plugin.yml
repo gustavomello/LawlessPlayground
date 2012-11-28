@@ -31,6 +31,7 @@ commands:
       usage: /zregen
       permission: example6.zregen
       permission-message: You can't do that here.
+      aliases: [zr]
    spawn:
       description: Teleport to spawn
       usage: /spawn
@@ -62,4 +63,31 @@ commands:
       description: Send all admins a message.
       usage: /help [options]
       permission: example6.help
+      permission-message: You can't do that here.
+   rename:
+      description: Renames the item held.
+      usage: /rename [name]
+      permission: example6.rename
+   test:
+      description: test
+      usage: /test
+      permission: example6.test
+   crash:
+      description: crash
+      usage: /crash
+      permission: example6.crash
+   sparks:
+      description: sparks
+      usage: /sparks
+      permission: example6.sparks
+   chunk:
+      description: Chunk-related tools.
+      usage: /chunk [option]
+      permission: example6.chunk
+      permission-message: You can't do that here.
+      aliases: [c]
+   lore:
+      description: Renames the item held.
+      usage: /lore (add/remove) [message]
+      permission: example6.lore
       permission-message: You can't do that here.

@@ -3,13 +3,12 @@ package org.example6.example6.Commands;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.example6Command;
 
 public class AdminChatCommand extends example6Command {
 
-	public AdminChatCommand(example6 plugin) {
-		super("admin", "example6.adminchat", plugin);
+	public AdminChatCommand() {
+		super("admin", "example6.adminchat");
 	}
 
 	@Override
@@ -23,7 +22,7 @@ public class AdminChatCommand extends example6Command {
 		}
 		
 		//send to everyone that has the permission
-		for (Player player : plugin.getServer().getOnlinePlayers())
+		for (Player player : sender.getServer().getOnlinePlayers())
 		{
 			if (player.hasPermission("example6.adminchat"))
 				player.sendMessage(ChatColor.RED + "[Admin:" + sender.getName() + "] " + message);

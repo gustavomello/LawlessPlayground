@@ -4,25 +4,24 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.WorldChangeCommand;
-import org.example6.example6.Config.PlayerConfig;
 
 public class SurvivalCommand extends WorldChangeCommand {
 	
-	public SurvivalCommand(example6 plugin) {
-		super("survival", "example6.survival", plugin);
+	public SurvivalCommand() {
+		super("survival", "example6.survival");
 	}
 
 	@Override
 	public Location getSpawn() {
-		return plugin.getMultiverseCore()
+		return example6.getMultiverseCore()
 				.getMVWorldManager()
-				.getMVWorld(plugin.getServer().getWorld("world"))
+				.getMVWorld(example6.getWorldManager().getOverworld())
 				.getSpawnLocation();
 	}
 
 	@Override
 	public Location getLastLocation(Player player) {
-		PlayerConfig config = new PlayerConfig(player.getName(), plugin);
-		return config.getSurvivalLocation();
+		return example6.getConfigManager().getPlayerConfig(player)
+				.getSurvivalLocation();
 	}
 }

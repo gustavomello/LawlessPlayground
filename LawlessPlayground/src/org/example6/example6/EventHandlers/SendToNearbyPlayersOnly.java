@@ -1,21 +1,15 @@
 package org.example6.example6.EventHandlers;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Entity;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.example6.example6.example6;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerChatHandler;
 
 public class SendToNearbyPlayersOnly extends PlayerChatHandler {
-
-	public SendToNearbyPlayersOnly(example6 plugin) {
-		super(plugin);
-	}
 
 	@Override
 	public void run(AsyncPlayerChatEvent event) {
@@ -36,7 +30,7 @@ public class SendToNearbyPlayersOnly extends PlayerChatHandler {
 		}
 		else
 		{
-			for(Player p : plugin.getServer().getOnlinePlayers())
+			for(Player p : event.getPlayer().getServer().getOnlinePlayers())
 			{
 				if (!p.getWorld().getName().equalsIgnoreCase("zombies"))
 					context.add(p);
@@ -44,7 +38,7 @@ public class SendToNearbyPlayersOnly extends PlayerChatHandler {
 		}
 		
 		//add allchat members
-		List<Player> allchat = this.getAllchatRecipients();
+		List<Player> allchat = this.getAllchatRecipients(event.getPlayer().getServer());
 
 		recipients.add(player);
 		recipients.addAll(allchat);
@@ -54,10 +48,10 @@ public class SendToNearbyPlayersOnly extends PlayerChatHandler {
 		event.getRecipients().addAll(recipients);
 	}
 	
-	public List<Player> getAllchatRecipients()
+	public List<Player> getAllchatRecipients(Server server)
 	{
 		List<Player> players = new ArrayList<Player>();
-		for (Player player : plugin.getServer().getOnlinePlayers())
+		for (Player player : server.getOnlinePlayers())
 		{
 			if (player.hasPermission("example6.allchat"))
 				players.add(player);

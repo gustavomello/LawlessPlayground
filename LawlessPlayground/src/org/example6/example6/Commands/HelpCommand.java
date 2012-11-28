@@ -33,9 +33,9 @@ public class HelpCommand extends example6Command {
 	};
 	public static File helpDir;
 
-	public HelpCommand(example6 plugin) {
-		super("help", "example6.help", plugin);
-		HelpCommand.helpDir = new File(plugin.getDataFolder(), "help");
+	public HelpCommand() {
+		super("help", "example6.help");
+		HelpCommand.helpDir = new File(example6.getConfigManager().getDataFolder(), "help");
 	}
 	/*
 	public List<String> getSubTopics(File file)
@@ -121,7 +121,6 @@ public class HelpCommand extends example6Command {
 				try {
 					defaultTarget.createNewFile();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			displayHelpContents(sender, defaultTarget);
@@ -147,7 +146,6 @@ public class HelpCommand extends example6Command {
 				sender.sendMessage(ChatColor.YELLOW + "It loooks like this help file wasn't filled out yet!");
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

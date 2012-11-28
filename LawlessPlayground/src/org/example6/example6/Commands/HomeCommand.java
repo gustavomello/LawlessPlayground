@@ -2,13 +2,12 @@ package org.example6.example6.Commands;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.TeleportCommand;
 
 public class HomeCommand extends TeleportCommand {
 
-	public HomeCommand(example6 plugin) {
-		super("home", "example6.home", plugin);
+	public HomeCommand() {
+		super("home", "example6.home");
 	}
 
 	@Override

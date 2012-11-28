@@ -1,6 +1,8 @@
 package org.example6.example6.Config;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -8,30 +10,29 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.example6.example6.Models.ChunkGroup;
 
 public class Config {
 	private String filename;
 	private FileConfiguration config;
-	private JavaPlugin plugin;
-	public Config(String inFilename, JavaPlugin inPlugin)
+	private File dataFolder;
+	public Config(String inFilename, File dataFolder)
 	{
-		filename = inFilename;
-		plugin = inPlugin;
+		ConfigurationSerialization.registerClass(ChunkGroup.class);
+		
+		
+		this.filename = inFilename;
+		this.dataFolder = dataFolder;
 		
 		saveDefaults();
 		reload();
 
 		this.config.options().copyDefaults(true);
-	}
-	
-	public Server getServer()
-	{
-		return plugin.getServer();
 	}
 	
 	public void createSection(String path, Map<String, Object> map)
@@ -84,7 +85,12 @@ public class Config {
 	
 	private YamlConfiguration getDefaultConfig()
 	{
-	    InputStream defConfigStream = this.plugin.getResource(this.filename);
+	    InputStream defConfigStream = null;
+		try {
+			defConfigStream = new FileInputStream(new File(this.dataFolder, this.filename));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	    if (defConfigStream == null)
 	    	return null;
 	    else
@@ -92,14 +98,13 @@ public class Config {
 	}
 
 	private void saveDefaults() {
-	    File configFile = new File(this.plugin.getDataFolder(), this.filename);
+	    File configFile = new File(this.dataFolder, this.filename);
 	    YamlConfiguration defConfig = getDefaultConfig();
 	    
 	    if (defConfig == null) return;
 	    
 	    if (!configFile.exists())
 	    {
-	    	this.plugin.getLogger().info("No config file " + this.filename + " exists, creating it now.");
 		    this.config = defConfig;
 	    	this.save();
 	    }
@@ -107,11 +112,11 @@ public class Config {
 	}
 	
 	public void reload() {
-	    this.config = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), this.filename));
+	    this.config = YamlConfiguration.loadConfiguration(new File(this.dataFolder, this.filename));
 	}
 	
 	public void save() {
-	    File customConfigFile = new File(this.plugin.getDataFolder(), this.filename);
+	    File customConfigFile = new File(this.dataFolder, this.filename);
 	    if (config != null && customConfigFile != null) {
 		    try {
 		    	config.save(customConfigFile);

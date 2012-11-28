@@ -7,13 +7,12 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.PlayerCommand;
 
 public class RandomCommand extends PlayerCommand {
 
-	public RandomCommand(example6 plugin) {
-		super("random", "example6.random", plugin);
+	public RandomCommand() {
+		super("random", "example6.random");
 	}
 	
 	public static int generatePosNegRandomInt(Random generator, int size)

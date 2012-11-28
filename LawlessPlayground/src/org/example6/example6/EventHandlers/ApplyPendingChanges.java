@@ -13,15 +13,10 @@ import org.example6.example6.Utils.ExperienceManager;
 
 public class ApplyPendingChanges extends PlayerJoinHandler {
 
-	public ApplyPendingChanges(example6 plugin) {
-		super(plugin);
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void run(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		List<String> changes = plugin.getPlayerConfig(player).getPendingChanges();
+		List<String> changes = example6.getConfigManager().getPlayerConfig(player).getPendingChanges();
 		
 		if (changes.size()==0) return;
 		
@@ -33,21 +28,21 @@ public class ApplyPendingChanges extends PlayerJoinHandler {
 					ExperienceManager expMan = new ExperienceManager(player);
 					expMan.setExp(0);
 					player.setTotalExperience(0);
-					plugin.getTempData().SetLastCombatTime(player.getName(),  Calendar.getInstance().getTimeInMillis());
+					example6.getTempData().SetLastCombatTime(player.getName(),  Calendar.getInstance().getTimeInMillis());
 					player.sendMessage(ChatColor.RED + "You logged off while in combat, and ended up losing all your experience!");
 				break;
 				case PendingChange.CLEAR_WORN_ITEMS:
 					player.getInventory().setArmorContents(null);
-					plugin.getTempData().SetLastCombatTime(player.getName(),  Calendar.getInstance().getTimeInMillis());
+					example6.getTempData().SetLastCombatTime(player.getName(),  Calendar.getInstance().getTimeInMillis());
 					player.sendMessage(ChatColor.RED + "You logged off while in combat, and ended up losing your worn items!");
 				break;
 				case PendingChange.CLEAR_INVENTORY:
 					player.getInventory().clear();
-					plugin.getTempData().SetLastCombatTime(player.getName(),  Calendar.getInstance().getTimeInMillis());
+					example6.getTempData().SetLastCombatTime(player.getName(),  Calendar.getInstance().getTimeInMillis());
 					player.sendMessage(ChatColor.RED + "You logged off while in combat, and ended up losing your entire inventory!");
 				break;
 			}
 		}
-		plugin.getPlayerConfig(player).clearPendingChanges();
+		example6.getConfigManager().getPlayerConfig(player).clearPendingChanges();
 	}
 }

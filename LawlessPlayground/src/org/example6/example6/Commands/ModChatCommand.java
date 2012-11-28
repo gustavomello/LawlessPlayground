@@ -3,13 +3,12 @@ package org.example6.example6.Commands;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.example6Command;
 
 public class ModChatCommand extends example6Command {
 
-	public ModChatCommand(example6 plugin) {
-		super("mod", "example6.modchat", plugin);
+	public ModChatCommand() {
+		super("mod", "example6.modchat");
 	}
 
 	@Override
@@ -23,7 +22,7 @@ public class ModChatCommand extends example6Command {
 		}
 		
 		//send to everyone that has the permission
-		for (Player player : plugin.getServer().getOnlinePlayers())
+		for (Player player : sender.getServer().getOnlinePlayers())
 		{
 			if (player.hasPermission("example6.modchat"))
 				player.sendMessage(ChatColor.AQUA + "[Mod:" + sender.getName() + "] " + message);

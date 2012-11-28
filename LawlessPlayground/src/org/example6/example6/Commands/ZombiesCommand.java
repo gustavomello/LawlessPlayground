@@ -4,25 +4,23 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.WorldChangeCommand;
-import org.example6.example6.Config.PlayerConfig;
 
 public class ZombiesCommand extends WorldChangeCommand {
 
-	public ZombiesCommand(example6 plugin) {
-		super("zombies", "example6.zombies", plugin);
+	public ZombiesCommand() {
+		super("zombies", "example6.zombies");
 	}
 
 	@Override
 	public Location getSpawn() {
-		return plugin.getMultiverseCore()
+		return example6.getMultiverseCore()
 				.getMVWorldManager()
-				.getMVWorld(plugin.getServer().getWorld("zombies"))
+				.getMVWorld(example6.getWorldManager().getZombieWorld())
 				.getSpawnLocation();
 	}
 
 	@Override
 	public Location getLastLocation(Player player) {
-		PlayerConfig config = new PlayerConfig(player.getName(), plugin);
-		return config.getZombiesLocation();
+		return example6.getConfigManager().getPlayerConfig(player).getZombiesLocation();
 	}
 }

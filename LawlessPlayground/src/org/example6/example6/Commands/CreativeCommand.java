@@ -4,25 +4,24 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.WorldChangeCommand;
-import org.example6.example6.Config.PlayerConfig;
 
 public class CreativeCommand extends WorldChangeCommand {
 
-	public CreativeCommand(example6 plugin) {
-		super("creative", "example6.creative", plugin);
+	public CreativeCommand() {
+		super("creative", "example6.creative");
 	}
 
 	@Override
 	public Location getSpawn() {
-		return plugin.getMultiverseCore()
+		return example6.getMultiverseCore()
 				.getMVWorldManager()
-				.getMVWorld(plugin.getServer().getWorld("creative"))
+				.getMVWorld(example6.getWorldManager().getCreativeWorld())
 				.getSpawnLocation();
 	}
 
 	@Override
 	public Location getLastLocation(Player player) {
-		PlayerConfig config = new PlayerConfig(player.getName(), plugin);
-		return config.getCreativeLocation();
+		return example6.getConfigManager().getPlayerConfig(player)
+				.getCreativeLocation();
 	}
 }

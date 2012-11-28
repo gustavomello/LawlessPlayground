@@ -4,15 +4,19 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.example6.example6.Models.ChunkGroup;
 
-public class TempData {
+public class TempManager {
 	example6 plugin;
 	HashMap<String,Long> lastCombatTimes = new HashMap<String,Long>();
 	HashMap<String,Long> lastTeleportTimes = new HashMap<String,Long>();
+	HashMap<Player,ChunkGroup> lastChunkGroup = new HashMap<Player,ChunkGroup>();
+	HashMap<Player,Boolean> sparksEnabled = new HashMap<Player,Boolean>();
 	World zombies;
 	World creative;
 	
-	public TempData(example6 plugin) {
+	public TempManager(example6 plugin) {
 		this.plugin = plugin;
 		this.zombies = plugin.getServer().getWorld("zombies");
 		this.creative = plugin.getServer().getWorld("creative");
@@ -44,6 +48,16 @@ public class TempData {
 		lastTeleportTimes.put(player, time);
 	}
 	
+	public ChunkGroup GetLastChunkGroup(Player player)
+	{
+		return this.lastChunkGroup.get(player);
+	}
+	
+	public void SetLastChunkGroup(Player player, ChunkGroup chunk)
+	{
+		this.lastChunkGroup.put(player, chunk);
+	}
+	
 	private long lastTimeOrZero(HashMap<String,Long> map, String player)
 	{
 		Long result = map.get(player);
@@ -52,5 +66,17 @@ public class TempData {
 			return 0;
 		}
 		return (long) result;
+	}
+	
+	public Boolean HasSparksEnabled(Player player)
+	{
+		if (!this.sparksEnabled.containsKey(player))
+			return false;
+		return this.sparksEnabled.get(player);
+	}
+	
+	public void SetSparksEnabled(Player player, boolean enabled)
+	{
+		this.sparksEnabled.put(player, enabled);
 	}
 }

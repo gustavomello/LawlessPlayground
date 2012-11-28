@@ -1,10 +1,11 @@
 package org.example6.example6.Config;
 
+import java.io.File;
 import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.example6.example6.example6;
 
 
 public class PlayerConfig extends Config {
@@ -44,8 +45,8 @@ public class PlayerConfig extends Config {
 	}
 
 	//make this be player specific
-	public PlayerConfig(String player, JavaPlugin inPlugin) {
-		super("userdata/" + player.toLowerCase() + ".yml", inPlugin);
+	public PlayerConfig(String player, File dataFolder) {
+		super("userdata/" + player.toLowerCase() + ".yml", dataFolder);
 	}
 	
 	public List<String> getKits()
@@ -84,7 +85,13 @@ public class PlayerConfig extends Config {
 			return null;
 		
 		String worldName = this.get(PlayerConfigKeys.SURVIVAL_LOCATION_WORLD, "world").toString();
-		World world = this.getServer().getWorld(worldName);
+		World world = null;
+		if (worldName.equals("world"))
+			world = example6.getWorldManager().getOverworld();
+		else if (worldName.equals("world_nether"))
+			world = example6.getWorldManager().getNether();
+		else if (worldName.equals("world_the_end"))
+			world = example6.getWorldManager().getEnd();
 		double x = this.getDouble(PlayerConfigKeys.SURVIVAL_LOCATION_X, 0);
 		double y = this.getDouble(PlayerConfigKeys.SURVIVAL_LOCATION_Y, 64);
 		double z = this.getDouble(PlayerConfigKeys.SURVIVAL_LOCATION_Z, 0);
@@ -120,14 +127,15 @@ public class PlayerConfig extends Config {
 		if (!this.has(PlayerConfigKeys.ZOMBIES_LOCATION))
 			return null;
 		
-		World world = this.getServer().getWorld("zombies");
 		double x = this.getDouble(PlayerConfigKeys.ZOMBIES_LOCATION_X, 0);
 		double y = this.getDouble(PlayerConfigKeys.ZOMBIES_LOCATION_Y, 64);
 		double z = this.getDouble(PlayerConfigKeys.ZOMBIES_LOCATION_Z, 0);
 		float pitch = (float) this.getDouble(PlayerConfigKeys.ZOMBIES_LOCATION_PITCH, 0);
 		float yaw = (float) this.getDouble(PlayerConfigKeys.ZOMBIES_LOCATION_YAW, 0);
 		
-		Location location = new Location(world, x, y, z);
+		Location location = new Location(
+				example6.getWorldManager().getZombieWorld(), x, y, z
+				);
 		location.setPitch(pitch);
 		location.setYaw(yaw);
 		
@@ -155,14 +163,15 @@ public class PlayerConfig extends Config {
 		if (!this.has(PlayerConfigKeys.CREATIVE_LOCATION))
 			return null;
 		
-		World world = this.getServer().getWorld("creative");
 		double x = this.getDouble(PlayerConfigKeys.CREATIVE_LOCATION_X, 0);
 		double y = this.getDouble(PlayerConfigKeys.CREATIVE_LOCATION_Y, 64);
 		double z = this.getDouble(PlayerConfigKeys.CREATIVE_LOCATION_Z, 0);
 		float pitch = (float) this.getDouble(PlayerConfigKeys.CREATIVE_LOCATION_PITCH, 0);
 		float yaw = (float) this.getDouble(PlayerConfigKeys.CREATIVE_LOCATION_YAW, 0);
 		
-		Location location = new Location(world, x, y, z);
+		Location location = new Location(
+				example6.getWorldManager().getCreativeWorld(), x, y, z
+				);
 		location.setPitch(pitch);
 		location.setYaw(yaw);
 		

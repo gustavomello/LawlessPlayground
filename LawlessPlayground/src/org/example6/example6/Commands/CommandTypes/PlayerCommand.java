@@ -3,12 +3,11 @@ package org.example6.example6.Commands.CommandTypes;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.example6.example6.example6;
 
 public abstract class PlayerCommand extends example6Command {
 
-	public PlayerCommand(String name, String permission, example6 plugin) {
-		super(name, permission, plugin);
+	public PlayerCommand(String name, String permission) {
+		super(name, permission);
 	}
 
 	@Override

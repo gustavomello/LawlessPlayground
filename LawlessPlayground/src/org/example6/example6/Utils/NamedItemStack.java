@@ -72,6 +72,10 @@ public class NamedItemStack {
 		
 		getDisplay().set("Lore", newLores);
 	}
+
+	public void clearLores() {
+		getDisplay().remove("Lore");
+	}
 	
 	public String getName() {
 		if (hasDisplay() == false) {

@@ -3,13 +3,12 @@ package org.example6.example6.Commands;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.example6Command;
 
 public class WhisperCommand extends example6Command {
 
-	public WhisperCommand(example6 plugin) {
-		super("whisper", "example6.whisper", plugin);
+	public WhisperCommand() {
+		super("whisper", "example6.whisper");
 	}
 
 	@Override
@@ -27,7 +26,7 @@ public class WhisperCommand extends example6Command {
 			message += args[i] + " ";
 		}
 
-		Player targetPlayer = plugin.getServer().getPlayer(args[0]);
+		Player targetPlayer = sender.getServer().getPlayer(args[0]);
 		
 		if (targetPlayer == null || !targetPlayer.isOnline())
 		{
