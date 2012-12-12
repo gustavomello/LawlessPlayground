@@ -2,23 +2,19 @@ package org.example6.example6;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.example6.example6.Commands.*;
-import org.example6.example6.EventHandlers.ApplyPendingChanges;
-import org.example6.example6.EventHandlers.DenyTeleportIfInCombat;
-import org.example6.example6.EventHandlers.DenyTeleportIfTooSoon;
-import org.example6.example6.EventHandlers.GreenText;
-import org.example6.example6.EventHandlers.HandleChunkGroupBreak;
-import org.example6.example6.EventHandlers.HandleChunkGroupPlace;
-import org.example6.example6.EventHandlers.HandleLockedChest;
-import org.example6.example6.EventHandlers.HandleZombieChunkChanged;
-import org.example6.example6.EventHandlers.LogLastDamageTimePVP;
-import org.example6.example6.EventHandlers.LoseStuffIfInCombat;
-import org.example6.example6.EventHandlers.RandomRespawnIfNoHome;
-import org.example6.example6.EventHandlers.RandomizeSpawnIfNew;
-import org.example6.example6.EventHandlers.ResetLastLocation;
-import org.example6.example6.EventHandlers.SendToNearbyPlayersOnly;
-import org.example6.example6.EventHandlers.SetLastLocation;
-import org.example6.example6.EventHandlers.Sparks;
-import org.example6.example6.EventHandlers.TryCreative;
+import org.example6.example6.EventHandlers.ChunkGroupHandler;
+import org.example6.example6.EventHandlers.MysteryBoxHandler;
+import org.example6.example6.EventHandlers.NewPlayerHandler;
+import org.example6.example6.EventHandlers.PVPLogHandler;
+import org.example6.example6.EventHandlers.PlayerDisposeHandler;
+import org.example6.example6.EventHandlers.GreenTextHandler;
+import org.example6.example6.EventHandlers.PluginHandler;
+import org.example6.example6.EventHandlers.RandomRespawnHandler;
+import org.example6.example6.EventHandlers.ServerLoginHandler;
+import org.example6.example6.EventHandlers.ZombieChatHandler;
+import org.example6.example6.EventHandlers.SparksHandler;
+import org.example6.example6.EventHandlers.WorldHandler;
+import org.example6.example6.EventHandlers.ZombieStatsHandler;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 
@@ -32,9 +28,9 @@ public class example6 extends JavaPlugin {
 	
 	private static ConfigManager cfg;
 	
-	private static WorldManager wrd;
+	private static PluginManager plug;
 	
-	private static transient MultiverseCore mvcore;
+	private static WorldManager wrd;
 
 	private static TaskManager task;
 	
@@ -46,50 +42,51 @@ public class example6 extends JavaPlugin {
 		cfg = new ConfigManager(this.getDataFolder());
 		wrd = new WorldManager(this);
 		task = new TaskManager(this);
-		mvcore = (MultiverseCore) getServer().getPluginManager().getPlugin("Multiverse-Core");
+		plug = new PluginManager();
 		
-		cmd.AddCommand(new HomeCommand());
-		cmd.AddCommand(new SpawnCommand());
-		cmd.AddCommand(new SurvivalCommand());
-		cmd.AddCommand(new CreativeCommand());
-		cmd.AddCommand(new ZombiesCommand());
-		cmd.AddCommand(new RandomCommand());
-		cmd.AddCommand(new ModChatCommand());
-		cmd.AddCommand(new AdminChatCommand());
-		cmd.AddCommand(new HelpCommand());
-		cmd.AddCommand(new RenameCommand());
-		cmd.AddCommand(new LoreCommand());
-		cmd.AddCommand(new ZombieChunkCommand());
-		cmd.AddCommand(new TestCommand());
-		cmd.AddCommand(new CrashCommand());
-		cmd.AddCommand(new SparksCommand());
+		cmd.addCommand(new HomeCommand());
+		cmd.addCommand(new SpawnCommand());
+		cmd.addCommand(new SurvivalCommand());
+		cmd.addCommand(new CreativeCommand());
+		cmd.addCommand(new ZombiesCommand());
+		cmd.addCommand(new RandomCommand());
+		cmd.addCommand(new ModChatCommand());
+		cmd.addCommand(new BoxCommand());
+		cmd.addCommand(new AdminChatCommand());
+		cmd.addCommand(new HelpCommand());
+		cmd.addCommand(new RenameCommand());
+		cmd.addCommand(new LoreCommand());
+		cmd.addCommand(new ZombieChunkCommand());
+		cmd.addCommand(new TestCommand());
+		cmd.addCommand(new CrashCommand());
+		cmd.addCommand(new SparksCommand());
+		cmd.addCommand(new VoteCommand());
 		
-		//stuff for new people
-		evt.OnPlayerJoin.add(new TryCreative());
-		evt.OnPlayerJoin.add(new RandomizeSpawnIfNew());
-		evt.OnPlayerRespawn.add(new RandomRespawnIfNoHome());
 		
 		//world management / teleportation
-		evt.OnTeleport.add(new SetLastLocation());
-		evt.OnEntityDeath.add(new ResetLastLocation());
+		evt.registerHandler(new WorldHandler());
 		
-		//pvp logging / escape countermeasures 
-		evt.OnTeleport.add(new DenyTeleportIfInCombat());
-		evt.OnPlayerQuit.add(new LoseStuffIfInCombat());
-		evt.OnTeleport.add(new DenyTeleportIfTooSoon());
-		evt.OnEntityDamageByEntity.add(new LogLastDamageTimePVP());
-		evt.OnPlayerJoin.add(new ApplyPendingChanges());
+		//chat management
+		evt.registerHandler(new GreenTextHandler());
+		evt.registerHandler(new ZombieChatHandler());
 		
 		//random
-		evt.OnPlayerChat.add(new GreenText());
-		evt.OnPlayerMove.add(new Sparks());
-		evt.OnBlockPlace.add(new HandleLockedChest());
+		evt.registerHandler(new SparksHandler());
+		evt.registerHandler(new RandomRespawnHandler());
+		evt.registerHandler(new PVPLogHandler());
+		evt.registerHandler(new MysteryBoxHandler());
+		
+		//background
+		evt.registerHandler(new NewPlayerHandler());
+		evt.registerHandler(new PlayerDisposeHandler());
+		evt.registerHandler(new ServerLoginHandler());
+		//evt.registerHandler(new PluginHandler());
 		
 		//zombies
-		evt.OnPlayerChat.add(new SendToNearbyPlayersOnly());
-		evt.OnBlockBreak.add(new HandleChunkGroupBreak());
-		evt.OnBlockPlace.add(new HandleChunkGroupPlace());
-		evt.OnPlayerMove.add(new HandleZombieChunkChanged());		
+		evt.registerHandler(new ChunkGroupHandler());
+		evt.registerHandler(new ZombieStatsHandler());
+		
+		PluginHandler.RegisterOtherPlugins(this.getServer());
 	}
 	
 	public void onDisable()
@@ -111,12 +108,15 @@ public class example6 extends JavaPlugin {
 		return task;
 	}
 	
-	public static MultiverseCore getMultiverseCore()
-	{
-		return mvcore;
-	}
-
 	public static WorldManager getWorldManager() {
 		return wrd;
+	}
+
+	public static PluginManager getPlug() {
+		return plug;
+	}
+
+	public static void setPlug(PluginManager plug) {
+		example6.plug = plug;
 	}
 }

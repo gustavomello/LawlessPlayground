@@ -1,10 +1,7 @@
 package org.example6.example6.Config;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -25,11 +22,9 @@ public class Config {
 	{
 		ConfigurationSerialization.registerClass(ChunkGroup.class);
 		
-		
 		this.filename = inFilename;
 		this.dataFolder = dataFolder;
 		
-		saveDefaults();
 		reload();
 
 		this.config.options().copyDefaults(true);
@@ -81,34 +76,6 @@ public class Config {
 	public double getDouble(String path, double defaultNumber)
 	{
 		return config.getDouble(path, defaultNumber);
-	}
-	
-	private YamlConfiguration getDefaultConfig()
-	{
-	    InputStream defConfigStream = null;
-		try {
-			defConfigStream = new FileInputStream(new File(this.dataFolder, this.filename));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	    if (defConfigStream == null)
-	    	return null;
-	    else
-	    	return YamlConfiguration.loadConfiguration(defConfigStream);
-	}
-
-	private void saveDefaults() {
-	    File configFile = new File(this.dataFolder, this.filename);
-	    YamlConfiguration defConfig = getDefaultConfig();
-	    
-	    if (defConfig == null) return;
-	    
-	    if (!configFile.exists())
-	    {
-		    this.config = defConfig;
-	    	this.save();
-	    }
-	    this.config.setDefaults(defConfig);
 	}
 	
 	public void reload() {

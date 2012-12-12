@@ -1,10 +1,12 @@
 package org.example6.example6.Utils;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
+import org.example6.example6.example6;
 
 import net.minecraft.server.NBTTagCompound;
 import net.minecraft.server.NBTTagList;
@@ -19,6 +21,29 @@ public class Book implements Serializable
 	private String author;
     private String title;
     private String[] pages;
+    
+    public Book(String name)
+    {
+    	this.author = "example6";
+    	this.title = "Something went wrong.";
+    	this.pages = new String[50];
+    	List<String> contents = example6.getConfigManager().getBookContents(name);
+    	for (int i = 0; i < contents.size(); i++)
+    	{
+    		switch (i)
+    		{
+	    		case 0:
+	    			this.setTitle(contents.get(i));
+	    			break;
+	    		case 1:
+	    			this.setAuthor(contents.get(i));
+	    			break;
+    			default:
+    				this.addPage(contents.get(i));
+    				break;
+    		}
+    	}
+    }
  
     public Book(ItemStack bookItem){
         NBTTagCompound bookData = ((CraftItemStack) bookItem).getHandle().tag;
@@ -53,9 +78,32 @@ public class Book implements Serializable
         author = sAuthor;
     }
    
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+   
     public String getTitle()
     {
         return title;
+    }
+    
+    public void addPage(String page)
+    {
+    	
+    	for (int i = 0; i < pages.length; i++)
+    	{
+    		if (pages[i] == null)
+    		{
+    			pages[i] = page;
+    			return;
+    		}
+    	}
+    }
+    
+    public void clearPages()
+    {
+    	pages = new String[pages.length];
     }
    
     public String[] getPages()
@@ -74,7 +122,11 @@ public class Book implements Serializable
         NBTTagList nPages = new NBTTagList();
         for(int i = 0;i<pages.length;i++)
         { 
-            nPages.add(new NBTTagString(pages[i],pages[i]));
+        	if (pages[i] != null && pages[i].length() != 0)
+        	{
+        		String page = MiscUtils.colorize(pages[i].replace("\\n", "\n"));
+        		nPages.add(new NBTTagString(page,page));
+        	}
         }
        
         newBookData.set("pages", nPages);

@@ -1,5 +1,7 @@
 package org.example6.example6.Utils;
 
+import java.awt.Color;
+
 import net.minecraft.server.EntityBoat;
 import net.minecraft.server.EntityItemFrame;
 import net.minecraft.server.EntityMinecart;
@@ -8,9 +10,11 @@ import net.minecraft.server.EnumArt;
 import net.minecraft.server.World;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.entity.CraftItemFrame;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Hanging;
@@ -19,6 +23,8 @@ import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.PoweredMinecart;
 import org.bukkit.entity.StorageMinecart;
+import org.bukkit.inventory.ItemStack;
+import org.example6.example6.Models.ColoredArmor;
 
 public class EntityManager {
 
@@ -34,9 +40,13 @@ public class EntityManager {
 			
 			loc.setWorld(targetLoc.getWorld());
 			if (entity instanceof Painting)
+			{
 				EntityManager.SpawnPainting((Painting) entity, loc, dir);
+			}
 			else if (entity instanceof ItemFrame)
-				EntityManager.SpawnItemFrame((CraftItemFrame) entity, loc, dir);
+			{
+				EntityManager.SpawnItemFrame((ItemFrame) entity, loc, dir);
+			}
 		}
 		else if (entity instanceof StorageMinecart)
 		{
@@ -157,19 +167,40 @@ public class EntityManager {
 		world.getHandle().addEntity(paint);
 	}
 
-	public static void SpawnItemFrame(CraftItemFrame f, Location loc, int dir) {
+	public static void SpawnItemFrame(ItemFrame entity, Location loc, int dir) {
 		CraftWorld world = ((CraftWorld)loc.getWorld());
 		EntityItemFrame frame = new EntityItemFrame(world.getHandle(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), dir);
-		net.minecraft.server.ItemStack stack = new net.minecraft.server.ItemStack(((ItemFrame)f).getItem().getTypeId(), 1, 0);
-		frame.a(stack);
 		//set item rotation, direction
-		((ItemFrame)frame.getBukkitEntity()).setRotation(f.getRotation());
+		((ItemFrame)frame.getBukkitEntity()).setRotation(entity.getRotation());
 		
 		if(!frame.survives()) {
 			frame = null;
 			return;
 		}
 		world.getHandle().addEntity(frame);
+		
+		if (entity.getItem() != null)
+		{
+			ItemStack sourceItem = new CraftItemStack(((CraftItemFrame)entity).getHandle().i());
+			ItemStack destItem = InventoryManager.CopyItem(new ItemStack(entity.getItem()));
+			
+			if (sourceItem != null)
+			{
+				ColoredArmor colorSource = 
+						new ColoredArmor(sourceItem);
+				ColoredArmor colorDest = 
+						new ColoredArmor(MiscUtils.toCraftBukkit(destItem));
+				
+				colorDest.setColor(colorSource.getColor());
+				((ItemFrame)frame.getBukkitEntity()).setItem(destItem);
+			}
+			else
+			{
+				System.out.println("Weird bug: x:"+entity.getLocation().getX()
+						+",y:"+entity.getLocation().getY()
+						+",z:"+entity.getLocation().getZ());
+			}
+		}
 	}
 
 }

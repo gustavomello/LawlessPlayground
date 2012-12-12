@@ -13,7 +13,7 @@ public class CreativeCommand extends WorldChangeCommand {
 
 	@Override
 	public Location getSpawn() {
-		return example6.getMultiverseCore()
+		return example6.getPlug().getMvcore()
 				.getMVWorldManager()
 				.getMVWorld(example6.getWorldManager().getCreativeWorld())
 				.getSpawnLocation();
@@ -23,5 +23,12 @@ public class CreativeCommand extends WorldChangeCommand {
 	public Location getLastLocation(Player player) {
 		return example6.getConfigManager().getPlayerConfig(player)
 				.getCreativeLocation();
+	}
+
+	@Override
+	public boolean runAsCommand(Player player, String command, String alias,
+			String[] args) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

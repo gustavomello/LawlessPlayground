@@ -13,16 +13,15 @@ public abstract class WorldChangeCommand extends TeleportCommand {
 	@Override
 	public final Boolean RunIfCanTeleport(Player player, String command, String alias,
 			String[] args)
-	{		
+	{
+		if (this.runAsCommand(player, command, alias, args))
+			return true;
+		
 		Location location = getLastLocation(player);
 		if (location != null)
-		{
 			player.teleport(location, TeleportCause.COMMAND);
-		}
 		else
-		{
 			player.teleport(getSpawn(), TeleportCause.COMMAND);
-		}
 		
 		return true;
 	}
@@ -30,4 +29,6 @@ public abstract class WorldChangeCommand extends TeleportCommand {
 	public abstract Location getSpawn();
 	
 	public abstract Location getLastLocation(Player player);
+	
+	public abstract boolean runAsCommand(Player player, String command, String alias, String[] args);
 }

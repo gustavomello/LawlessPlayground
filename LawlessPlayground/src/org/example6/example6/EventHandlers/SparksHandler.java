@@ -6,7 +6,7 @@ import org.example6.example6.example6;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerMoveHandler;
 import org.example6.example6.Utils.PacketManager;
 
-public class Sparks extends PlayerMoveHandler {
+public class SparksHandler implements PlayerMoveHandler {
 
 	@Override
 	public void run(PlayerMoveEvent event) {

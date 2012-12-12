@@ -30,7 +30,7 @@ public class TempManager {
 	public Boolean IsInCombat(String player)
 	{
 		return (Calendar.getInstance().getTimeInMillis() <
-		this.lastTimeOrZero(lastCombatTimes, player) + 10000);
+		this.lastTimeOrZero(lastCombatTimes, player) + 20000);
 	}
 	
 	public void SetLastCombatTime(String player, long time)

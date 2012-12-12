@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.example6.example6.example6;
 
 
@@ -20,6 +21,8 @@ public class PlayerConfig extends Config {
 		static final String KITS = "kits";
 		
 		static final String PENDING_CHANGES = "pendingchanges";
+		
+		static final String VOTES = "votes";
 
 		static final String SURVIVAL_LOCATION = "location.survival";
 		static final String SURVIVAL_LOCATION_WORLD = "location.survival.world";
@@ -35,6 +38,9 @@ public class PlayerConfig extends Config {
 		static final String ZOMBIES_LOCATION_Z = "location.zombies.z";
 		static final String ZOMBIES_LOCATION_PITCH = "location.zombies.pitch";
 		static final String ZOMBIES_LOCATION_YAW = "location.zombies.yaw";
+		static final String ZOMBIES_LIFETIME = "zombies.lifetime";
+		static final String ZOMBIES_LAST_ENTER = "zombies.lastenter";
+		static final String ZOMBIES_KILLS = "zombies.kills";
 
 		static final String CREATIVE_LOCATION = "location.creative";
 		static final String CREATIVE_LOCATION_X = "location.creative.x";
@@ -49,15 +55,50 @@ public class PlayerConfig extends Config {
 		super("userdata/" + player.toLowerCase() + ".yml", dataFolder);
 	}
 	
-	public List<String> getKits()
+	public int getVotes()
+	{
+		return (int) this.get(PlayerConfigKeys.VOTES, 0);
+	}
+	
+	public void setVotes(int value)
+	{
+		this.set(PlayerConfigKeys.VOTES, value);
+		this.save();
+	}
+	
+	public List<String> getBoxes()
 	{
 		return this.getStringList(PlayerConfigKeys.KITS);
 	}
 	
-	public void setKits(List<String> newKits)
+	public void setBoxes(List<String> newKits)
 	{
 		this.set(PlayerConfigKeys.KITS, newKits);
 		this.save();
+	}
+
+	public void addBox(String value) {
+		List<String> newBoxes = getBoxes();
+		newBoxes.add(value);
+		setBoxes(newBoxes);
+	}
+	
+	public String getFirstBox()
+	{
+		List<String> values = getBoxes();
+		if (values.size() > 0)
+		{
+			String value = values.get(0);
+			return value;
+		}
+		return null;
+	}
+	
+	public void deleteBox(String box)
+	{
+		List<String> values = getBoxes();
+		values.remove(box);
+		setBoxes(values);
 	}
 	
 	public void addPendingChange(String change)
@@ -191,6 +232,33 @@ public class PlayerConfig extends Config {
 	public void clearCreativeLocation()
 	{
 		this.set(PlayerConfigKeys.CREATIVE_LOCATION, null);
+		this.save();
+	}
+	
+	public long getZombiesLifeTime() {
+		return this.getLong(PlayerConfigKeys.ZOMBIES_LIFETIME, 0L);
+	}
+	
+	public void setZombiesLifeTime(long value) {
+		this.set(PlayerConfigKeys.ZOMBIES_LIFETIME, value);
+		this.save();
+	}
+	
+	public long getZombiesLastEnter() {
+		return this.getLong(PlayerConfigKeys.ZOMBIES_LAST_ENTER, 0L);
+	}
+	
+	public void setZombiesLastEnter(long value) {
+		this.set(PlayerConfigKeys.ZOMBIES_LAST_ENTER, value);
+		this.save();
+	}
+	
+	public int getZombiesKills() {
+		return (int) this.get(PlayerConfigKeys.ZOMBIES_KILLS, 0);
+	}
+	
+	public void setZombiesKills(int value) {
+		this.set(PlayerConfigKeys.ZOMBIES_KILLS, value);
 		this.save();
 	}
 }

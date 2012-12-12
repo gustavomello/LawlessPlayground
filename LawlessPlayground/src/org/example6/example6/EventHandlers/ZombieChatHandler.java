@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerChatHandler;
 
-public class SendToNearbyPlayersOnly extends PlayerChatHandler {
+public class ZombieChatHandler implements PlayerChatHandler {
 
 	@Override
 	public void run(AsyncPlayerChatEvent event) {

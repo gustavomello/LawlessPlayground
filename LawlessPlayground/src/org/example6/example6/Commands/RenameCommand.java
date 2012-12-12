@@ -5,8 +5,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.example6.example6.Commands.CommandTypes.example6Command;
+import org.example6.example6.Models.NamedItemStack;
 import org.example6.example6.Utils.MiscUtils;
-import org.example6.example6.Utils.NamedItemStack;
 
 public class RenameCommand extends example6Command {
 

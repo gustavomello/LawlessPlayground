@@ -1,6 +1,7 @@
 name: LawlessPlayground
 main: org.example6.example6.example6
 softdepend: [Multiverse-Core, PermissionsEx]
+depend: [Vault]
 version: 10.3.6
 commands:
    zombies:
@@ -72,6 +73,10 @@ commands:
       description: test
       usage: /test
       permission: example6.test
+   box:
+      description: test
+      usage: /box
+      permission: example6.box
    crash:
       description: crash
       usage: /crash
@@ -80,6 +85,10 @@ commands:
       description: sparks
       usage: /sparks
       permission: example6.sparks
+   vote:
+      description: vote
+      usage: /vote
+      permission: example6.vote
    chunk:
       description: Chunk-related tools.
       usage: /chunk [option]

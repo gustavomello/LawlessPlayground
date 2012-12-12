@@ -222,12 +222,16 @@ public class ZombieChunkCommand extends example6Command {
 	}
 
 	public void SendUsage(CommandSender sender) {
-		sender.sendMessage(ChatColor.RED + "Usage:");
-		sender.sendMessage(ChatColor.RED + "  /chunk add [desired_group]");
-		sender.sendMessage(ChatColor.RED + "  /chunk remove");
-		sender.sendMessage(ChatColor.RED + "  /chunk clear [desired_group]");
-		sender.sendMessage(ChatColor.RED + "  /chunk title [desired_group]");
-		sender.sendMessage(ChatColor.RED + "  /chunk regen");
+		sender.sendMessage(ChatColor.RED + "Red - Must be standing in the chunk");
+		sender.sendMessage(ChatColor.YELLOW + "Yellow - Can execute from any chunk");
+		sender.sendMessage(ChatColor.YELLOW + "  /c help - Show this info");
+		sender.sendMessage(ChatColor.YELLOW + "  /c delete [chunkgroup] - Deletes the entire chunk group.");
+		sender.sendMessage(ChatColor.YELLOW + "  /c info [chunkgroup] - Gives info about a chunk group.");
+		sender.sendMessage(ChatColor.YELLOW + "  /c list - Lists all of the chunk groups.");
+		sender.sendMessage(ChatColor.RED + "  /c free - Removes the current chunk from its group.");
+		sender.sendMessage(ChatColor.RED + "  /c put [chunkgroup] - Puts current chunk in specified group. Creates it if necessary.");
+		sender.sendMessage(ChatColor.RED + "  /c title [title] - Gives a title to a chunk group. Supports formatting.");
+		sender.sendMessage(ChatColor.RED + "  /c regen - Regenerates the current chunk group.");
 	}
 
 }

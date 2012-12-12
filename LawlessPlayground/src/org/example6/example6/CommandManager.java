@@ -19,7 +19,7 @@ public class CommandManager implements CommandExecutor {
 		commands = new ArrayList<example6Command>();
 	}
 	
-	public void AddCommand(example6Command command)
+	public void addCommand(example6Command command)
 	{
 		commands.add(command);
 		PluginCommand serverCommand = plugin.getCommand(command.getName());

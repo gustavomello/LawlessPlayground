@@ -87,7 +87,7 @@ public class ChunkRegenTask extends BukkitRunnable {
 				BlockManager.ApplyBlockChange(change.getChange(), change.getLocation().getBlock());
 				iter.remove();
 				i++;
-				if (i == 100) break;
+				if (i == 64) break;
 			}
 			if (blocks.size()==0)
 			{

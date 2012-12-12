@@ -14,7 +14,7 @@ public class SpawnCommand extends TeleportCommand {
 	@Override
 	public Boolean RunIfCanTeleport(Player player, String command,
 			String alias, String[] args) {
-		player.teleport(example6.getMultiverseCore().getMVWorldManager().getMVWorld(player.getWorld()).getSpawnLocation());
+		player.teleport(example6.getPlug().getMvcore().getMVWorldManager().getMVWorld(player.getWorld()).getSpawnLocation());
 		return true;
 	}
 

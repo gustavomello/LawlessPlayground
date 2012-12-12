@@ -1,4 +1,4 @@
-package org.example6.example6.Utils;
+package org.example6.example6.Models;
 
 import java.util.ArrayList;
 import java.util.List;
