@@ -2,17 +2,16 @@ package org.example6.example6.Utils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class MiscUtils {
-	public static ItemStack toCraftBukkit(ItemStack stack) {
+	/*public static ItemStack toCraftBukkit(ItemStack stack) {
 		if (!(stack instanceof CraftItemStack))
 	        return new CraftItemStack(stack);
 	    else
 	        return stack;
-	}
+	}*/
 	
 	public static void giveItemSafely(Player player, ItemStack stack)
 	{

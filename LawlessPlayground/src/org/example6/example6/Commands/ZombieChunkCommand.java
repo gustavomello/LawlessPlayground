@@ -78,6 +78,10 @@ public class ZombieChunkCommand extends example6Command {
 					}
 					SetChunkGroupTitle(player, name);
 				}
+				else if (args[0].equalsIgnoreCase("help"))
+				{
+					SendUsage(sender);
+				}
 			}
 		}
 		return true;
@@ -224,14 +228,14 @@ public class ZombieChunkCommand extends example6Command {
 	public void SendUsage(CommandSender sender) {
 		sender.sendMessage(ChatColor.RED + "Red - Must be standing in the chunk");
 		sender.sendMessage(ChatColor.YELLOW + "Yellow - Can execute from any chunk");
-		sender.sendMessage(ChatColor.YELLOW + "  /c help - Show this info");
-		sender.sendMessage(ChatColor.YELLOW + "  /c delete [chunkgroup] - Deletes the entire chunk group.");
-		sender.sendMessage(ChatColor.YELLOW + "  /c info [chunkgroup] - Gives info about a chunk group.");
-		sender.sendMessage(ChatColor.YELLOW + "  /c list - Lists all of the chunk groups.");
-		sender.sendMessage(ChatColor.RED + "  /c free - Removes the current chunk from its group.");
-		sender.sendMessage(ChatColor.RED + "  /c put [chunkgroup] - Puts current chunk in specified group. Creates it if necessary.");
-		sender.sendMessage(ChatColor.RED + "  /c title [title] - Gives a title to a chunk group. Supports formatting.");
-		sender.sendMessage(ChatColor.RED + "  /c regen - Regenerates the current chunk group.");
+		sender.sendMessage(ChatColor.YELLOW + "  /ch help - Show this info");
+		sender.sendMessage(ChatColor.YELLOW + "  /ch delete [chunkgroup] - Deletes the entire chunk group.");
+		sender.sendMessage(ChatColor.YELLOW + "  /ch info [chunkgroup] - Gives info about a chunk group.");
+		sender.sendMessage(ChatColor.YELLOW + "  /ch list - Lists all of the chunk groups.");
+		sender.sendMessage(ChatColor.RED + "  /ch free - Removes the current chunk from its group.");
+		sender.sendMessage(ChatColor.RED + "  /ch put [chunkgroup] - Puts current chunk in specified group. Creates it if necessary.");
+		sender.sendMessage(ChatColor.RED + "  /ch title [title] - Gives a title to a chunk group. Supports formatting.");
+		sender.sendMessage(ChatColor.RED + "  /ch regen - Regenerates the current chunk group.");
 	}
 
 }

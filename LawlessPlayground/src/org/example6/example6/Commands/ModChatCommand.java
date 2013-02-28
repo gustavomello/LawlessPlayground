@@ -25,7 +25,7 @@ public class ModChatCommand extends example6Command {
 		for (Player player : sender.getServer().getOnlinePlayers())
 		{
 			if (player.hasPermission("example6.modchat"))
-				player.sendMessage(ChatColor.AQUA + "[Mod:" + sender.getName() + "] " + message);
+				player.sendMessage(ChatColor.AQUA + "[M] " + sender.getName() + ": " + message);
 		}
 		
 		return true;

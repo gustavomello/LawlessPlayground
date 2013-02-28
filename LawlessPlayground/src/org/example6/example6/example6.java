@@ -4,19 +4,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.example6.example6.Commands.*;
 import org.example6.example6.EventHandlers.ChunkGroupHandler;
 import org.example6.example6.EventHandlers.MysteryBoxHandler;
-import org.example6.example6.EventHandlers.NewPlayerHandler;
+import org.example6.example6.EventHandlers.ServerJoinHandler;
 import org.example6.example6.EventHandlers.PVPLogHandler;
 import org.example6.example6.EventHandlers.PlayerDisposeHandler;
 import org.example6.example6.EventHandlers.GreenTextHandler;
 import org.example6.example6.EventHandlers.PluginHandler;
 import org.example6.example6.EventHandlers.RandomRespawnHandler;
-import org.example6.example6.EventHandlers.ServerLoginHandler;
+import org.example6.example6.EventHandlers.SpellCrystalHandler;
 import org.example6.example6.EventHandlers.ZombieChatHandler;
 import org.example6.example6.EventHandlers.SparksHandler;
 import org.example6.example6.EventHandlers.WorldHandler;
-import org.example6.example6.EventHandlers.ZombieStatsHandler;
-
-import com.onarandombox.MultiverseCore.MultiverseCore;
+import org.example6.example6.EventHandlers.ZombieGameHandler;
+import org.example6.example6.Tasks.MobMovement;
+import org.example6.example6.Tasks.ZombiesCheckupTask;
 
 public class example6 extends JavaPlugin {
 	
@@ -39,10 +39,10 @@ public class example6 extends JavaPlugin {
 		tmp = new TempManager(this);
 		cmd = new CommandManager(this);
 		evt = new EventManager(this);
-		cfg = new ConfigManager(this.getDataFolder());
 		wrd = new WorldManager(this);
 		task = new TaskManager(this);
-		plug = new PluginManager();
+		plug = new PluginManager(this);
+		cfg = new ConfigManager(this.getDataFolder());
 		
 		cmd.addCommand(new HomeCommand());
 		cmd.addCommand(new SpawnCommand());
@@ -61,7 +61,12 @@ public class example6 extends JavaPlugin {
 		cmd.addCommand(new CrashCommand());
 		cmd.addCommand(new SparksCommand());
 		cmd.addCommand(new VoteCommand());
-		
+		cmd.addCommand(new StatsCommand());
+		cmd.addCommand(new CrystalCommand());
+		cmd.addCommand(new SpellCommand());
+		cmd.addCommand(new GrieferCommand());
+		cmd.addCommand(new WorldMsgCommand());
+		cmd.addCommand(new BookCommand());
 		
 		//world management / teleportation
 		evt.registerHandler(new WorldHandler());
@@ -75,18 +80,22 @@ public class example6 extends JavaPlugin {
 		evt.registerHandler(new RandomRespawnHandler());
 		evt.registerHandler(new PVPLogHandler());
 		evt.registerHandler(new MysteryBoxHandler());
+		evt.registerHandler(new SpellCrystalHandler());
 		
 		//background
-		evt.registerHandler(new NewPlayerHandler());
+		evt.registerHandler(new ServerJoinHandler());
 		evt.registerHandler(new PlayerDisposeHandler());
-		evt.registerHandler(new ServerLoginHandler());
 		//evt.registerHandler(new PluginHandler());
 		
 		//zombies
 		evt.registerHandler(new ChunkGroupHandler());
-		evt.registerHandler(new ZombieStatsHandler());
+		evt.registerHandler(new ZombieGameHandler());
 		
 		PluginHandler.RegisterOtherPlugins(this.getServer());
+		evt.registerHandler(new PluginHandler());
+		
+		getTaskManager().RunTaskTimer(new MobMovement(), 5L, 5L);
+		getTaskManager().RunTaskTimer(new ZombiesCheckupTask(), 1200L, 1200L);
 	}
 	
 	public void onDisable()

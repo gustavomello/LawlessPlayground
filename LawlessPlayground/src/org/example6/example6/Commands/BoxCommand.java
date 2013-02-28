@@ -25,11 +25,11 @@ public class BoxCommand extends example6Command {
 					&& MysteryBox.CanBeGiven(sender.getServer().getPlayer(player).getWorld()))
 			{
 				MysteryBox box = new MysteryBox(value);
-				box.GiveToPlayer(sender.getServer().getPlayer(player));
+				box.giveToPlayer(sender.getServer().getPlayer(player));
 			}
 			else
 			{
-				example6.getConfigManager().getPlayerConfig(player).addBox(value);
+				example6.getConfigManager().getOfflinePlayerConfig(player).addBox(value);
 			}
 			
 			sender.sendMessage("Player \"" + player + "\" has been given a box with a value of " + value);

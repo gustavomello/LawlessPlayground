@@ -7,8 +7,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -16,10 +19,16 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 import org.example6.example6.EventHandlers.HandlerTypes.BlockBreakHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.BlockPlaceHandler;
+import org.example6.example6.EventHandlers.HandlerTypes.ChunkUnloadHandler;
+import org.example6.example6.EventHandlers.HandlerTypes.CreatureSpawnHandler;
+import org.example6.example6.EventHandlers.HandlerTypes.EntityCombustHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.EntityDamageByEntityHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.EntityDeathHandler;
+import org.example6.example6.EventHandlers.HandlerTypes.EntityExplodeHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerChangedWorldHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerChatHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerJoinHandler;
@@ -28,6 +37,7 @@ import org.example6.example6.EventHandlers.HandlerTypes.PlayerMoveHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerQuitHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerRespawnHandler;
 import org.example6.example6.EventHandlers.HandlerTypes.PlayerTeleportHandler;
+import org.example6.example6.EventHandlers.HandlerTypes.PluginEnableHandler;
 
 public class EventManager implements Listener {
 	ArrayList<PlayerTeleportHandler> OnTeleport = new ArrayList<PlayerTeleportHandler>();
@@ -42,6 +52,11 @@ public class EventManager implements Listener {
 	ArrayList<BlockPlaceHandler> OnBlockPlace = new ArrayList<BlockPlaceHandler>();
 	ArrayList<BlockBreakHandler> OnBlockBreak = new ArrayList<BlockBreakHandler>();
 	ArrayList<PlayerLoginHandler> OnPlayerLogin = new ArrayList<PlayerLoginHandler>();
+	ArrayList<PluginEnableHandler> OnPluginEnable = new ArrayList<PluginEnableHandler>();
+	ArrayList<ChunkUnloadHandler> OnChunkUnload = new ArrayList<ChunkUnloadHandler>();
+	ArrayList<EntityCombustHandler> OnEntityCombust = new ArrayList<EntityCombustHandler>();
+	ArrayList<CreatureSpawnHandler> OnCreatureSpawn = new ArrayList<CreatureSpawnHandler>();
+	ArrayList<EntityExplodeHandler> OnEntityExplode = new ArrayList<EntityExplodeHandler>();
 	
 	public EventManager(example6 plugin)
 	{
@@ -108,6 +123,31 @@ public class EventManager implements Listener {
 		if (o instanceof BlockBreakHandler)
 		{
 			this.OnBlockBreak.add((BlockBreakHandler) o);
+		}
+
+		if (o instanceof PluginEnableHandler)
+		{
+			this.OnPluginEnable.add((PluginEnableHandler) o);
+		}
+
+		if (o instanceof ChunkUnloadHandler)
+		{
+			this.OnChunkUnload.add((ChunkUnloadHandler) o);
+		}
+
+		if (o instanceof EntityCombustHandler)
+		{
+			this.OnEntityCombust.add((EntityCombustHandler) o);
+		}
+
+		if (o instanceof CreatureSpawnHandler)
+		{
+			this.OnCreatureSpawn.add((CreatureSpawnHandler) o);
+		}
+
+		if (o instanceof EntityExplodeHandler)
+		{
+			this.OnEntityExplode.add((EntityExplodeHandler) o);
 		}
 	}
 	
@@ -206,6 +246,51 @@ public class EventManager implements Listener {
 	public void OnBlockBreak(BlockBreakEvent event)
 	{
 		for (BlockBreakHandler r : OnBlockBreak)
+		{
+			r.run(event);
+		}
+	}
+	
+	@EventHandler
+	public void OnPluginEnable(PluginEnableEvent event)
+	{
+		for (PluginEnableHandler r : OnPluginEnable)
+		{
+			r.run(event);
+		}
+	}
+	
+	@EventHandler
+	public void OnChunkUnload(ChunkUnloadEvent event)
+	{
+		for (ChunkUnloadHandler r : OnChunkUnload)
+		{
+			r.run(event);
+		}
+	}
+	
+	@EventHandler
+	public void OnEntityCombust(EntityCombustEvent event)
+	{
+		for (EntityCombustHandler r : OnEntityCombust)
+		{
+			r.run(event);
+		}
+	}
+	
+	@EventHandler
+	public void OnCreatureSpawn(CreatureSpawnEvent event)
+	{
+		for (CreatureSpawnHandler r : OnCreatureSpawn)
+		{
+			r.run(event);
+		}
+	}
+	
+	@EventHandler
+	public void OnEntityExplode(EntityExplodeEvent event)
+	{
+		for (EntityExplodeHandler r : OnEntityExplode)
 		{
 			r.run(event);
 		}

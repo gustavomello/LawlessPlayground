@@ -1,10 +1,11 @@
 package org.example6.example6.Utils;
 
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_4_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.example6.example6.Models.ColoredArmor;
-import org.example6.example6.Models.NamedItemStack;
+import org.example6.example6.Models.Book;
+import org.example6.example6.Models.ItemDisplay;
 
 public class InventoryManager {
 
@@ -32,18 +33,12 @@ public class InventoryManager {
 		ItemStack duplicatedItem = new ItemStack(sourceItem);
 		if (sourceItem.getType() == Material.WRITTEN_BOOK)
 		{
-			Book source = new Book(sourceItem);
-			Book book = new Book(
-					source.getTitle(),
-					source.getAuthor(),
-					source.getPages()
-					);
-			duplicatedItem = book.generateItemStack();
+			duplicatedItem = Book.copy(duplicatedItem);
 		}
 		else
 		{
-			ItemStack source = MiscUtils.toCraftBukkit(sourceItem);
-			ItemStack target = MiscUtils.toCraftBukkit(duplicatedItem);
+			ItemStack source = CraftItemStack.asCraftCopy(sourceItem);
+			ItemStack target = CraftItemStack.asCraftCopy(duplicatedItem);
 			
 			//copy armor color if necessary
 			if (sourceItem.getType().equals(Material.LEATHER_BOOTS)
@@ -51,8 +46,8 @@ public class InventoryManager {
 					|| sourceItem.getType().equals(Material.LEATHER_CHESTPLATE)
 					|| sourceItem.getType().equals(Material.LEATHER_HELMET))
 			{
-				ColoredArmor coloredSource = new ColoredArmor(source);
-				ColoredArmor coloredTarget = new ColoredArmor(target);
+				ItemDisplay coloredSource = new ItemDisplay(source);
+				ItemDisplay coloredTarget = new ItemDisplay(target);
 				
 				if (coloredSource.getColor() != 0)
 				{
@@ -61,18 +56,18 @@ public class InventoryManager {
 			}
 			
 			//copy names / lores
-			NamedItemStack namedSource = new NamedItemStack(source);
+			ItemDisplay namedSource = new ItemDisplay(source);
 			
-			NamedItemStack namedTarget = new NamedItemStack(target);
+			ItemDisplay namedTarget = new ItemDisplay(target);
 			
 			if (namedSource.getName() != null && !namedSource.getName().isEmpty())
 			{
 				namedTarget.setName(namedSource.getName());
 			}
 			
-			if (namedSource.getLoresList() != null && !namedSource.getLoresList().isEmpty())
+			if (namedSource.getLore() != null && !namedSource.getLore().isEmpty())
 			{
-				namedTarget.setLoresList(namedSource.getLoresList());
+				namedTarget.setLore(namedSource.getLore());
 			}
 			
 			duplicatedItem = target;

@@ -3,7 +3,10 @@ package org.example6.example6;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import net.minecraft.server.v1_4_R1.PathEntity;
+
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.example6.example6.Models.ChunkGroup;
 
@@ -13,6 +16,8 @@ public class TempManager {
 	HashMap<String,Long> lastTeleportTimes = new HashMap<String,Long>();
 	HashMap<Player,ChunkGroup> lastChunkGroup = new HashMap<Player,ChunkGroup>();
 	HashMap<Player,Boolean> sparksEnabled = new HashMap<Player,Boolean>();
+	HashMap<Entity,PathEntity> entityPaths = new HashMap<Entity,PathEntity>();
+	
 	World zombies;
 	World creative;
 	
@@ -78,5 +83,15 @@ public class TempManager {
 	public void SetSparksEnabled(Player player, boolean enabled)
 	{
 		this.sparksEnabled.put(player, enabled);
+	}
+	
+	public PathEntity GetPathEntity(Entity e)
+	{
+		return this.entityPaths.get(e);
+	}
+	
+	public void SetPathEntity(Entity e, PathEntity p)
+	{
+		this.entityPaths.put(e, p);
 	}
 }

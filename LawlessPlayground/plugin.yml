@@ -8,63 +8,63 @@ commands:
       description: Teleport to zombies.
       usage: /zombies
       permission: example6.zombies
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that.
       aliases: [zombie, zomb, zom, z]
    creative:
       description: Teleport to creative.
       usage: /creative
       permission: example6.creative
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that.
    trycreative:
       description: Introduce self to creative ladder.
       usage: /trycreative
       permission: example6.trycreative
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that.
       aliases: [iwontgrief, letmebuild]
    survival:
       description: Teleport to survival
       usage: /survival
       permission: example6.survival
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that.
       aliases: [vanilla]
    zregen:
       description: Access zregen
       usage: /zregen
       permission: example6.zregen
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that.
       aliases: [zr]
    spawn:
       description: Teleport to spawn
       usage: /spawn
       permission: example6.spawn
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that.
    random:
       description: Teleport to a random location.
       usage: /random [maxwidth]
       permission: example6.random
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that!
    home:
       description: Teleport to home.
       usage: /home
       permission: example6.home
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that.
    mod:
       description: Send all mods a message.
       usage: /mod message
       permission: example6.modchat
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that.
       aliases: [modchat, mc]
    admin:
       description: Send all admins a message.
       usage: /admin message
       permission: example6.adminchat
       aliases: [adminchat, a]
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that.
    help:
       description: Send all admins a message.
       usage: /help [options]
       permission: example6.help
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that.
    rename:
       description: Renames the item held.
       usage: /rename [name]
@@ -93,10 +93,43 @@ commands:
       description: Chunk-related tools.
       usage: /chunk [option]
       permission: example6.chunk
-      permission-message: You can't do that here.
-      aliases: [c]
+      permission-message: You don't have permission to do that.
+      aliases: [ch]
    lore:
       description: Renames the item held.
       usage: /lore (add/remove) [message]
       permission: example6.lore
-      permission-message: You can't do that here.
+      permission-message: You don't have permission to do that.
+   stats:
+      description: stats
+      usage: /stats
+      permission: example6.stats
+      permission-message: You don't have permission to do that.
+   crystal:
+      description: crystal
+      usage: /crystal
+      permission: example6.crystal
+      permission-message: You don't have permission to do that.
+   spell:
+      description: spell
+      usage: /spell
+      permission: example6.spell
+      permission-message: You don't have permission to do that.
+   griefer:
+      description: griefer
+      usage: /griefer
+      permission: example6.griefer
+      permission-message: You don't have permission to do that.
+      aliases: [g,gr,grief]
+   worldmsg:
+      description: worldmsg
+      usage: /worldmsg
+      permission: example6.worldmsg
+      permission-message: You don't have permission to do that.
+      aliases: [wm, tellworld, tw, worldmessage, wmessage]
+   book:
+      description: book
+      usage: /book help
+      permission: example6.book
+      permission-message: You don't have permission to do that.
+      aliases: [books, library]

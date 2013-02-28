@@ -1,5 +1,6 @@
 package org.example6.example6.Commands;
 
+import java.util.Calendar;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
@@ -7,7 +8,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.PlayerCommand;
+import org.example6.example6.Config.PlayerConfig;
 
 public class RandomCommand extends PlayerCommand {
 
@@ -31,13 +34,29 @@ public class RandomCommand extends PlayerCommand {
 					);
 			return true;
 		}
-		int borderWidth = 2000;
-		if (args.length > 0)
+		
+		PlayerConfig pc = example6.getConfigManager().getPlayerConfig(player);
+		
+		if (pc.getLastRandom() + 3600000 > Calendar.getInstance().getTimeInMillis()
+				&& !player.hasPermission("example6.bypass"))
 		{
-			borderWidth = Integer.parseInt(args[0]);
+			int minutes = (int) (((pc.getLastRandom() + 3600000) - Calendar.getInstance().getTimeInMillis()) / 1000);
+			player.sendMessage(ChatColor.RED
+					+ "You must wait " + minutes + " seconds before doing that again."
+					);
+		}
+		else
+		{
+			int borderWidth = 2000;
+			if (args.length > 0 && player.hasPermission("example6.random.args"))
+			{
+				borderWidth = Integer.parseInt(args[0]);
+			}
+			
+			player.teleport(GetRandomLocation(player, borderWidth));
+			pc.setLastRandom(Calendar.getInstance().getTimeInMillis());
 		}
 		
-		player.teleport(GetRandomLocation(player, borderWidth));
 		return true;
 	}
 	

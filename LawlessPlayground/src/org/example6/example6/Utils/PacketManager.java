@@ -2,13 +2,13 @@ package org.example6.example6.Utils;
 
 import java.util.ArrayList;
 
-import net.minecraft.server.Packet;
-import net.minecraft.server.Packet60Explosion;
-import net.minecraft.server.Packet61WorldEvent;
+import net.minecraft.server.v1_4_R1.Packet;
+import net.minecraft.server.v1_4_R1.Packet60Explosion;
+import net.minecraft.server.v1_4_R1.Packet61WorldEvent;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_4_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -21,7 +21,7 @@ public class PacketManager {
 			if (e instanceof Player)
 			{
 				if (e.getLocation().distance(loc) < 256)
-					((CraftPlayer)e).getHandle().netServerHandler.sendPacket(packet);
+					((CraftPlayer)e).getHandle().playerConnection.sendPacket(packet);
 			}
 		}
 	}
@@ -45,7 +45,7 @@ public class PacketManager {
 				(int)loc.getZ(), 
 				id,
 				false);
-		((CraftPlayer)target).getHandle().netServerHandler.sendPacket(packet);
+		((CraftPlayer)target).getHandle().playerConnection.sendPacket(packet);
 	}
 
 	public static void SendExplosionPacket(Location loc, float size) {

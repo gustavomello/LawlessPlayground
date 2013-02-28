@@ -25,7 +25,7 @@ public class AdminChatCommand extends example6Command {
 		for (Player player : sender.getServer().getOnlinePlayers())
 		{
 			if (player.hasPermission("example6.adminchat"))
-				player.sendMessage(ChatColor.RED + "[Admin:" + sender.getName() + "] " + message);
+				player.sendMessage(ChatColor.RED + "[A] " + sender.getName() + ": " + message);
 		}
 		
 		return true;

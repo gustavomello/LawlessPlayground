@@ -5,11 +5,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.server.NBTTagCompound;
+import net.minecraft.server.v1_4_R1.NBTTagCompound;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_4_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -46,8 +46,8 @@ public class BreakLockedChest extends BukkitRunnable {
 				Item dropped = this.location.getWorld().dropItemNaturally(this.location, i);
 				if (i.getType().equals(Material.WRITTEN_BOOK))
 				{
-					NBTTagCompound newBookData = ((CraftItemStack) i).getHandle().tag;
-					((CraftItemStack) dropped.getItemStack()).getHandle().setTag(newBookData);
+					NBTTagCompound newBookData = CraftItemStack.asNMSCopy(i).tag;
+					CraftItemStack.asNMSCopy(dropped.getItemStack()).setTag(newBookData);
 				}
 			}
 			

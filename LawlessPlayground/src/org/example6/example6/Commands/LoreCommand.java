@@ -5,9 +5,8 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.example6.example6.Commands.CommandTypes.example6Command;
-import org.example6.example6.Models.NamedItemStack;
+import org.example6.example6.Models.ItemDisplay;
 import org.example6.example6.Utils.MiscUtils;
 
 public class LoreCommand extends example6Command {
@@ -30,8 +29,7 @@ public class LoreCommand extends example6Command {
 					return true;
 				}
 
-				ItemStack itemInHand = MiscUtils.toCraftBukkit(player.getItemInHand());
-				NamedItemStack namedItem = new NamedItemStack(itemInHand);
+				ItemDisplay namedItem = new ItemDisplay(player.getItemInHand());
 				
 				if (args[0].equalsIgnoreCase("add"))
 				{
@@ -48,16 +46,13 @@ public class LoreCommand extends example6Command {
 						lore += args[i];
 					}
 					
-					List<String> lores = namedItem.getLoresList();
+					List<String> lores = namedItem.getLore();
 					lores.add(MiscUtils.colorize(lore));
-					namedItem.setLoresList(lores);
-					
-					player.setItemInHand(itemInHand);
+					namedItem.setLore(lores);
 				}
 				else if (args[0].equalsIgnoreCase("clear"))
 				{
-					namedItem.clearLores();
-					player.setItemInHand(itemInHand);
+					namedItem.setLore(null);
 				}
 				else
 				{

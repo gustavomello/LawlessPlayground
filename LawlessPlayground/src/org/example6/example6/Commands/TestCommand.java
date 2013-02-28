@@ -1,19 +1,13 @@
 package org.example6.example6.Commands;
 
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.entity.CraftItemFrame;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.example6Command;
-import org.example6.example6.Models.ColoredArmor;
-import org.example6.example6.Utils.Book;
-import org.example6.example6.Utils.InventoryManager;
-import org.example6.example6.Utils.MiscUtils;
+import org.example6.example6.Models.ItemDisplay;
 
 public class TestCommand extends example6Command {
 	
@@ -26,6 +20,16 @@ public class TestCommand extends example6Command {
 			String[] args) {
 		if (sender instanceof Player)
 		{
+			Player p = (Player) sender;
+			if (p.hasMetadata("testvalue"))
+			{
+				MetadataValue v = p.getMetadata("testvalue").get(0);
+				System.out.println("Had value: " + v.asString());
+			}
+			else
+			{
+				p.setMetadata("testvalue", new FixedMetadataValue(example6.getPlug().getExample6(), "lol"));
+			}
 		}
 		return true;
 	}

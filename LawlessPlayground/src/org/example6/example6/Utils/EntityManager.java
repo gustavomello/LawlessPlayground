@@ -1,30 +1,31 @@
 package org.example6.example6.Utils;
 
-import java.awt.Color;
-
-import net.minecraft.server.EntityBoat;
-import net.minecraft.server.EntityItemFrame;
-import net.minecraft.server.EntityMinecart;
-import net.minecraft.server.EntityPainting;
-import net.minecraft.server.EnumArt;
-import net.minecraft.server.World;
+import net.minecraft.server.v1_4_R1.EntityBoat;
+import net.minecraft.server.v1_4_R1.EntityItemFrame;
+import net.minecraft.server.v1_4_R1.EntityMinecart;
+import net.minecraft.server.v1_4_R1.EntityPainting;
+import net.minecraft.server.v1_4_R1.EnumArt;
+import net.minecraft.server.v1_4_R1.World;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.CraftWorld;
-import org.bukkit.craftbukkit.entity.CraftItemFrame;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_4_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_4_R1.entity.CraftItemFrame;
+import org.bukkit.craftbukkit.v1_4_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Boat;
+import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Hanging;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.PoweredMinecart;
 import org.bukkit.entity.StorageMinecart;
+import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
-import org.example6.example6.Models.ColoredArmor;
+import org.example6.example6.Models.ItemDisplay;
 
 public class EntityManager {
 
@@ -64,6 +65,37 @@ public class EntityManager {
 		{
 			EntityManager.SpawnBoat((Boat)entity, targetLoc);
 		}
+	}
+	
+	public static EnderCrystal SpawnEnderCrystal(Block block)
+	{
+		Location loc = block.getLocation();
+		loc.add(0.5,0,0.5);
+		return (EnderCrystal)block.getWorld().spawn(loc, EnderCrystal.class);
+	}
+	
+	public static EnderCrystal SpawnEnderCrystal(Location loc)
+	{
+		return (EnderCrystal)loc.getWorld().spawn(loc, EnderCrystal.class);
+	}
+
+	public static Zombie SpawnZombie(Location loc) {
+		return (Zombie)loc.getWorld().spawn(loc, Zombie.class);
+	}
+	
+	public static void SpawnXpOrbs(int exp, Location loc)
+	{
+		int xpAmountMod = 1;
+		if (exp > 10000)
+			xpAmountMod = 1000;
+		if (exp > 1000)
+			xpAmountMod = 100;
+		else if (exp > 100)
+			xpAmountMod = 10;
+		
+		int orbs = exp / xpAmountMod;
+		for (int i = 1; i <= orbs; i++)
+			((ExperienceOrb)loc.getWorld().spawn(loc, ExperienceOrb.class)).setExperience(xpAmountMod-1);
 	}
 	
 	public static void SpawnBoat(Boat source, Location loc) {
@@ -181,17 +213,20 @@ public class EntityManager {
 		
 		if (entity.getItem() != null)
 		{
-			ItemStack sourceItem = new CraftItemStack(((CraftItemFrame)entity).getHandle().i());
+			//ItemStack sourceItem = new CraftItemStack(((CraftItemFrame)entity).getHandle().i());
+			ItemStack sourceItem = CraftItemStack.asCraftMirror(((CraftItemFrame)entity).getHandle().i());
+			//will this even work?
 			ItemStack destItem = InventoryManager.CopyItem(new ItemStack(entity.getItem()));
 			
 			if (sourceItem != null)
 			{
-				ColoredArmor colorSource = 
-						new ColoredArmor(sourceItem);
-				ColoredArmor colorDest = 
-						new ColoredArmor(MiscUtils.toCraftBukkit(destItem));
+				ItemDisplay colorSource = 
+						new ItemDisplay(sourceItem);
+				ItemDisplay colorDest = 
+						new ItemDisplay(CraftItemStack.asCraftCopy(destItem));
 				
-				colorDest.setColor(colorSource.getColor());
+				if (colorSource.getColor() != 0)
+					colorDest.setColor(colorSource.getColor());
 				((ItemFrame)frame.getBukkitEntity()).setItem(destItem);
 			}
 			else

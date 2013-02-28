@@ -1,10 +1,12 @@
 package org.example6.example6.Config;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.example6.example6.example6;
 
@@ -20,7 +22,22 @@ public class PlayerConfig extends Config {
 	{
 		static final String KITS = "kits";
 		
+		static final String SPELLS = "spells";
+		
+		static final String CREATIVE_BAN_MESSAGE = "creative.ban.message";
+		static final String CREATIVE_BAN_ADMIN = "creative.ban.admin";
+		static final String CREATIVE_BAN_DATE = "creative.ban.date";
+
+		
 		static final String PENDING_CHANGES = "pendingchanges";
+
+		static final String JOIN_DATE = "login.first";
+		
+		static final String LAST_LOGIN = "login.last";
+		
+		static final String LAST_RANDOM_TELEPORT = "lastrandomteleport";
+
+		static final String LOGIN_DAY_COUNT = "login.daycount";
 		
 		static final String VOTES = "votes";
 
@@ -38,9 +55,11 @@ public class PlayerConfig extends Config {
 		static final String ZOMBIES_LOCATION_Z = "location.zombies.z";
 		static final String ZOMBIES_LOCATION_PITCH = "location.zombies.pitch";
 		static final String ZOMBIES_LOCATION_YAW = "location.zombies.yaw";
+		
 		static final String ZOMBIES_LIFETIME = "zombies.lifetime";
 		static final String ZOMBIES_LAST_ENTER = "zombies.lastenter";
 		static final String ZOMBIES_KILLS = "zombies.kills";
+		static final String ZOMBIFIED = "zombies.zombified";
 
 		static final String CREATIVE_LOCATION = "location.creative";
 		static final String CREATIVE_LOCATION_X = "location.creative.x";
@@ -64,6 +83,39 @@ public class PlayerConfig extends Config {
 	{
 		this.set(PlayerConfigKeys.VOTES, value);
 		this.save();
+	}
+	
+	public Boolean hasSpell(String spell)
+	{
+		return getSpells().contains(spell);
+	}
+	
+	public List<String> getSpells()
+	{
+		return this.getStringList(PlayerConfigKeys.SPELLS);
+	}
+	
+	public void setSpells(List<String> newSpells)
+	{
+		this.set(PlayerConfigKeys.SPELLS, newSpells);
+		this.save();
+	}
+
+	public void addSpell(String value) {
+		if (hasSpell(value)) return;
+		
+		List<String> newSpells = getSpells();
+		newSpells.add(value);
+		setSpells(newSpells);
+	}
+	
+	public void deleteSpell(String spell)
+	{
+		if (!hasSpell(spell)) return;
+		
+		List<String> values = getSpells();
+		values.remove(spell);
+		setSpells(values);
 	}
 	
 	public List<String> getBoxes()
@@ -260,5 +312,68 @@ public class PlayerConfig extends Config {
 	public void setZombiesKills(int value) {
 		this.set(PlayerConfigKeys.ZOMBIES_KILLS, value);
 		this.save();
+	}
+	
+	public long getLastLogin() {
+		return (long) this.get(PlayerConfigKeys.LAST_LOGIN, 0L);
+	}
+	
+	public void setLastLogin(long value) {
+		this.set(PlayerConfigKeys.LAST_LOGIN, value);
+		this.save();
+	}
+	
+	public int getLoginCount() {
+		return (int) this.get(PlayerConfigKeys.LOGIN_DAY_COUNT, 0);
+	}
+	
+	public void setLoginCount(int value) {
+		this.set(PlayerConfigKeys.LOGIN_DAY_COUNT, value);
+		this.save();
+	}
+
+	public void setJoinDate(long timeInMillis) {
+		this.set(PlayerConfigKeys.JOIN_DATE, timeInMillis);
+		this.save();
+	}
+	
+	public long getJoinDate() {
+		return (long) this.get(PlayerConfigKeys.JOIN_DATE, 0L);
+	}
+
+	public void setLastRandom(long timeInMillis) {
+		this.set(PlayerConfigKeys.LAST_RANDOM_TELEPORT, timeInMillis);
+		this.save();
+	}
+	
+	public long getLastRandom() {
+		return (long) this.get(PlayerConfigKeys.LAST_RANDOM_TELEPORT, 0L);
+	}
+
+	public void setCreativeBanMessage(String message, CommandSender sender) {
+		this.set(PlayerConfigKeys.CREATIVE_BAN_MESSAGE, message);
+		this.set(PlayerConfigKeys.CREATIVE_BAN_ADMIN, sender.getName());
+		this.set(PlayerConfigKeys.CREATIVE_BAN_DATE, Calendar.getInstance().getTimeInMillis());
+		this.save();
+	}
+	
+	public String getCreativeBanMessage() {
+		return (String) this.get(PlayerConfigKeys.CREATIVE_BAN_MESSAGE, null);
+	}
+	
+	public String getCreativeBanAdmin() {
+		return (String) this.get(PlayerConfigKeys.CREATIVE_BAN_ADMIN, null);
+	}
+	
+	public long getCreativeBanDate() {
+		return (long) this.getLong(PlayerConfigKeys.CREATIVE_BAN_DATE, 0L);
+	}
+	
+	public long getZombified() {
+		return (long) this.getLong(PlayerConfigKeys.ZOMBIFIED, 0L);
+	}
+	
+	public void setZombified(Object ms) {
+		this.set(PlayerConfigKeys.ZOMBIFIED, ms);
 	}
 }

@@ -10,6 +10,11 @@ public class TaskManager {
 		this.plugin = plugin;
 	}
 	
+	public void RunTaskAsync(BukkitRunnable r)
+	{
+		r.runTaskAsynchronously(this.plugin);
+	}
+	
 	public void RunTaskLater(BukkitRunnable r, long delay)
 	{
 		r.runTaskLater(this.plugin, delay);

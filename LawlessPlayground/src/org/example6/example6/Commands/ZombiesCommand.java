@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.example6.example6.example6;
 import org.example6.example6.Commands.CommandTypes.WorldChangeCommand;
 import org.example6.example6.Config.PlayerConfig;
-import org.example6.example6.EventHandlers.ZombieStatsHandler;
+import org.example6.example6.EventHandlers.ZombieGameHandler;
 
 public class ZombiesCommand extends WorldChangeCommand {
 
@@ -43,7 +43,7 @@ public class ZombiesCommand extends WorldChangeCommand {
 				
 				double seconds = lifetime / 1000;
 				
-				ZombieStatsHandler.SendSurvivalTimeMessage(player, seconds);
+				ZombieGameHandler.SendSurvivalTimeMessage(player, seconds);
 				
 				return true;
 			}
@@ -53,7 +53,7 @@ public class ZombiesCommand extends WorldChangeCommand {
 				
 				int kills = cfg.getZombiesKills();
 				
-				ZombieStatsHandler.SendKillsMessage(player, kills);
+				ZombieGameHandler.SendKillsMessage(player, kills);
 				
 				return true;
 			}
